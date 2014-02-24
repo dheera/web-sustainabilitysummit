@@ -8,11 +8,21 @@ pages = Blueprint('pages', __name__,template_folder='../template')
 @pages.route('/<pages>')
 def show(pages):
   try:
-    json_data=open('media/pages/%s.json' % pages).read()
+    isHeaderFinished=0
+    header_json=''
+    content=''
+    with open('media/pages/' + pages) as fp:
+      for line in fp:
+        if(line.strip()==''):
+          isHeaderFinished=1
+        if(isHeaderFinished):
+          content+=line.decode('utf-8')
+        else:
+          header_json+=line.decode('utf-8')
     print 'Loaded'
-    data = json.loads(json_data)
+    header = json.loads(header_json)
     print 'JSON decoded'
-    return render_template('page.html',title=data['title'],content=data['content'])
+    return render_template('page.html',title=header['title'],content=content)
   except IOError:
     abort(404)
   except TemplateNotFound:
