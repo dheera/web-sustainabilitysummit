@@ -1,5 +1,7 @@
 #!/usr/bin/python
 
+# this code mostly from 6.170
+
 import os, time, sys
 try:
     import thread

@@ -26,6 +26,8 @@ app.register_blueprint(team,url_prefix='/team')
 def send_foo(filename):
   return send_from_directory('/static', filename)
 
+# local development server with debug features
+# (deployment is via fcgi which ignores this)
 if __name__ == '__main__':
   print app.url_map
   app.run(debug=True)
