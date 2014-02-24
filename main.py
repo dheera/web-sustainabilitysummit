@@ -1,17 +1,27 @@
 from flask import Flask,request,render_template
-
-from home.view import home
-from pages.view import pages
-from photos.view import photos
-from program.view import program
-
 app = Flask(__name__)
 
+# front page
+from home.view import home
 app.register_blueprint(home)
+
+# static content that needs only templating (e.g. about, venue, etc.)
+from pages.view import pages
 app.register_blueprint(pages)
+
+# photo gallery
+from photos.view import photos
 app.register_blueprint(photos,url_prefix='/photos')
+
+# conference program from database
+from program.view import program
 app.register_blueprint(program,url_prefix='/program')
 
+# team page from database
+from team.view import team
+app.register_blueprint(team,url_prefix='/team')
+
+# static media files (e.g. javascript, css, images, fonts, and static html files)
 @app.route('/static/<path:filename>')
 def send_foo(filename):
   return send_from_directory('/static', filename)
