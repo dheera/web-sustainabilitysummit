@@ -8,7 +8,7 @@ pages = Blueprint('pages', __name__,template_folder='../template')
 @pages.route('/<pages>')
 def show(pages):
   try:
-    json_data=open('pages/content/%s.json' % pages).read()
+    json_data=open('media/pages/%s.json' % pages).read()
     print 'Loaded'
     data = json.loads(json_data)
     print 'JSON decoded'
