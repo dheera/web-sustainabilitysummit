@@ -17,7 +17,7 @@ class Sponsor(Base):
   def __repr__(self):
     return '<Sponsor %r>' % (self.name)
 
-# a person, which could be a speaker or an organizing team member
+# a person, could be any person, speaker or team member
 class Person(Base):
   __tablename__ = 'persons'
   __table_args__ = {'mysql_engine':'InnoDB','mysql_charset':'utf8'}
@@ -42,7 +42,7 @@ class Person(Base):
   def __repr__(self):
     return '<Person %r>' % (self.firstname + " " + self.lastname)
 
-# an event (e.g. Summit 2013, Summit 2014)
+# an event (for us they are just labelled by year, e.g. 2013, 2014)
 class Event(Base):
   __tablename__ = 'events'
   __table_args__ = {'mysql_engine':'InnoDB','mysql_charset':'utf8'}
@@ -74,7 +74,8 @@ class Timeslot(Base):
   def __repr__(self):
     return '<Timeslot %r>' % (self.name)
 
-# conference session (e.g. Lunch, Registration, Keynote, Breakout Session 1, Workshop 4, etc.)
+# conference session (e.g. Lunch, Registration,
+# Keynote, Breakout Session 1, Workshop 4, etc.)
 class Session(Base):
   __tablename__ = 'sessions'
   __table_args__ = {'mysql_engine':'InnoDB','mysql_charset':'utf8'}
@@ -108,21 +109,39 @@ class Team(Base):
   def __repr__(self):
     return '<Team %r>' % (self.name)
 
-assoc_person_session = Table('assoc_session_person', Base.metadata,
+# thought about making sessions<->timeslots many-to-many
+# (one session could appear in multiple timeslots
+# but decided against it since it hasn't happened in the first 5
+# years of the summit and it complicates management
+# so using the usual one-to-many technique of foreign key and backref
+# assoc_sessions_timeslots = Table('assoc_sessions_timeslots', Base.metadata,
+#   Column('session_id', Integer, ForeignKey('sessions.id')),
+#   Column('timeslot_id', Integer, ForeignKey('timeslots.id')),
+#   mysql_engine='InnoDB',
+#   mysql_charset='utf8',
+# )
+
+# person can appear in multiple sessions,
+# and session has multiple persons as  participants
+assoc_persons_sessions = Table('assoc_persons_sessions', Base.metadata,
   Column('person_id', Integer, ForeignKey('persons.id')),
   Column('session_id', Integer, ForeignKey('sessions.id')),
   mysql_engine='InnoDB',
   mysql_charset='utf8',
 )
 
-assoc_person_team = Table('assoc_person_team', Base.metadata,
+# person can also appear on multiple organizing teams,
+# and organizing team has multiple persons as members
+assoc_persons_teams = Table('assoc_persons_teams', Base.metadata,
   Column('person_id', Integer, ForeignKey('persons.id')),
   Column('team_id', Integer, ForeignKey('teams.id')),
   mysql_engine='InnoDB',
   mysql_charset='utf8',
 )
 
-assoc_event_sponsor = Table('assoc_event_sponsor', Base.metadata,
+# sponsor can appear on multiple events,
+# and events have multiple sponsors
+assoc_events_sponsors = Table('assoc_events_sponsors', Base.metadata,
   Column('event_id', Integer, ForeignKey('events.id')),
   Column('sponsor_id', Integer, ForeignKey('sponsors.id')),
   mysql_engine='InnoDB',

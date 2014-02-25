@@ -3,12 +3,17 @@ from sqlalchemy.orm import scoped_session, sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
 import string
 
-db_password=string.strip(open('.dbpassword').read())
 
-engine = create_engine("mysql://sustainability:%s@sql.mit.edu/sustainability+summit?charset=utf8&use_unicode=1" % db_password, convert_unicode=True, pool_recycle=3600)
+db_server = 'sql.mit.edu'
+db_username = 'sustainability'
+db_password = string.strip(open('.dbpassword').read()) # keep it off github
+db_name = 'sustainability+summit'
+
+db_url = "mysql://%s:%s@%s/%s?charset=utf8&use_unicode=1" % (db_username, db_password, db_server, db_name)
+db_engine = create_engine(db_url, convert_unicode=True, pool_recycle=3600)
 db_session = scoped_session(sessionmaker(autocommit=False,
                                          autoflush=False,
-                                         bind=engine))
+                                         bind=db_engine))
 Base = declarative_base()
 Base.query = db_session.query_property()
 
@@ -17,4 +22,4 @@ def init_db():
     # they will be registered properly on the metadata.  Otherwise
     # you will have to import them first before calling init_db()
     import models
-    Base.metadata.create_all(bind=engine)
+    Base.metadata.create_all(bind=db_engine)
