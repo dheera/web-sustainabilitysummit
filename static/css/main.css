@@ -34,6 +34,18 @@ body {
   font-size:14px; 
 }
 
+a, a:link, a:visited {
+  color:#0080cc;
+  text-decoration:none;
+  font-weight:bold;
+  border-bottom:1px dotted #0080cc;
+}
+
+a, a:link img, a:visited img {
+  border-bottom:0;
+  border-style:none;
+}
+
 h1 {
   font-family: sustainabilitysummit;
 }
