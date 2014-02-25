@@ -6,7 +6,9 @@ import string
 
 db_server = 'sql.mit.edu'
 db_username = 'sustainability'
-db_password = string.strip(open('.dbpassword').read()) # keep it off github
+# keep database password off github
+with open('.dbpassword') as fp:
+  db_password = string.strip(fp.read())
 db_name = 'sustainability+summit'
 
 db_url = "mysql://%s:%s@%s/%s?charset=utf8&use_unicode=1" % (db_username, db_password, db_server, db_name)
