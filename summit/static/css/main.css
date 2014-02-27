@@ -1,0 +1,70 @@
+@font-face {
+    font-family: 'sustainabilitysummit';
+    src: url('sustainabilitysummit-bold-webfont.eot');
+    src: url('sustainabilitysummit-bold-webfont.eot?#iefix') format('embedded-opentype'),
+         url('sustainabilitysummit-bold-webfont.woff') format('woff'),
+         url('sustainabilitysummit-bold-webfont.ttf') format('truetype'),
+         url('sustainabilitysummit-bold-webfont.svg#sustainabilitysummitbold') format('svg');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'sustainabilitysummit';
+    src: url('sustainabilitysummit-thin-webfont.eot');
+    src: url('sustainabilitysummit-thin-webfont.eot?#iefix') format('embedded-opentype'),
+         url('sustainabilitysummit-thin-webfont.woff') format('woff'),
+         url('sustainabilitysummit-thin-webfont.ttf') format('truetype'),
+         url('sustainabilitysummit-thin-webfont.svg#sustainabilitysummitthin') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body {
+  margin:0;
+  font-family: sustainabilitysummit;
+  line-height:1.5em;
+  font-size:18px;
+}
+
+#footer {
+  background:#606060;
+  padding:20px;
+  color:#ffffff;
+  font-size:14px; 
+}
+
+a, a:link, a:visited {
+  color:#0080cc;
+  text-decoration:none;
+  font-weight:bold;
+  border-bottom:1px dotted #0080cc;
+}
+
+a, a:link img, a:visited img {
+  border-bottom:0;
+  border-style:none;
+}
+
+h1 {
+  font-family: sustainabilitysummit;
+}
+
+.navbar_separator {
+  display:inline-block;
+  vertical-align:middle;
+  width:2px;
+  height:32px;
+  border-left:2px solid #d0d0d0;
+  padding-left:10px;
+  margin-left:10px;
+}
+
+.navbar_item {
+  display:inline-block;
+  vertical-align:middle;
+  width:68px;
+  height:32px;
+  text-align:center;
+  font-size:16px;
+}
