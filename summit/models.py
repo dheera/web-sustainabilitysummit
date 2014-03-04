@@ -1,6 +1,8 @@
 from sqlalchemy import Table, Column, Integer, String, DateTime, ForeignKey
 from sqlalchemy.orm import relationship, backref
 from database import Base
+import datetime, time, os, io
+from subprocess import call
 
 # person can appear in multiple sessions,
 # and session has multiple persons as  participants
@@ -57,7 +59,6 @@ class Person(Base):
   org2 = Column(String(255))
   title2 = Column(String(255))
   description = Column(String(4095))
-#  session = relationship('Session',backref='person',secondary='assoc_person_session')
 
   def __init__(self, lastname=None, firstname=None, org=None, title=None, org2=None, title2=None, description=None):
     self.lastname = lastname
@@ -70,6 +71,24 @@ class Person(Base):
 
   def __repr__(self):
     return '<Person %r>' % (self.firstname + " " + self.lastname)
+
+  def get_picture_url(self,size='120x120'):
+
+    # the source image we are looking for
+    src_filename = 'summit/media/picture.person/'+str(self.id)
+
+    # where we hope to find a cached copy, or create one if it doesn't exist
+    cache_url = '/static/cache/person_%s_%s.jpg' % (str(self.id), size)
+    dest_filename = 'summit'+cache_url
+
+    if not os.path.exists(src_filename):
+      return '/static/images/blank.gif'
+
+    if not os.path.exists(dest_filename):
+      call(["convert", "-sharpen", "0x0.8", "-strip", src_filename, "-thumbnail", size+"^", "-gravity", "center", "-extent", size, "-quality", "90", dest_filename])
+
+    return cache_url
+
 
 # an event (for us they are just labelled by year, e.g. 2013, 2014)
 class Event(Base):

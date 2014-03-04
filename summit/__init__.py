@@ -8,9 +8,10 @@ app = Flask(__name__)
 from views.home import home
 app.register_blueprint(home)
 
+#REPLACED by methods added to ORM models
 # thumbnails of objects
-from views.thumb import thumb
-app.register_blueprint(thumb,url_prefix='/thumb')
+#from views.thumb import thumb
+#app.register_blueprint(thumb,url_prefix='/thumb')
 
 # static content that needs only templating (e.g. about, venue, etc.)
 from views.pages import pages

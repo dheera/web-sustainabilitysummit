@@ -96,7 +96,7 @@ def show(year):
           program_html += session.description
           for person in session.person:
             program_html += '<div class="program_person">'
-            program_html += '<div class="program_person_cell"><img src="/thumb/person/%s/120x120"></div>' % person.id
+            program_html += '<div class="program_person_cell"><img src="'+person.get_picture_url(size='120x120')+'"></div>'
             program_html += '<div class="program_person_cell"><div class="program_person_name">%s %s</div><span class="program_person_title">%s</span><span class="program_person_org">%s</span></div>' % (person.firstname, person.lastname, person.title, person.org)
             program_html += '</div>'
 
