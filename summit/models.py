@@ -70,11 +70,26 @@ class Sponsor(Base):
   def __repr__(self):
     return '<Sponsor %r>' % (self.name)
 
-  def get_logo_svg_url(self):
+  def get_logo_raster_url(self,size='210x110'):
 
     # the source image we are looking for
-    src_filename = 'summit/media/db-sponsor/'+str(self.id)
+    src_filename = 'summit/media/db-sponsor/%s.png' % str(self.id)
+    # where we hope to find a cached copy, or create one if it doesn't exist
+    cache_url = '/static/cache/sponsor_%s_%s.png' % (str(self.id), size)
+    dest_filename = 'summit'+cache_url
 
+    if not os.path.exists(src_filename):
+      return None
+
+    if not os.path.exists(dest_filename):
+      call(["convert", "-strip", src_filename, "-thumbnail", size, "-gravity", "center", "-extent", size, dest_filename])
+
+    return cache_url
+
+  def get_logo_vector_url(self):
+
+    # the source image we are looking for
+    src_filename = 'summit/media/db-sponsor/%s.svg' % str(self.id)
     # where we hope to find a cached copy, or create one if it doesn't exist
     cache_url = '/static/cache/sponsor_%s.svg' % str(self.id)
     dest_filename = 'summit'+cache_url

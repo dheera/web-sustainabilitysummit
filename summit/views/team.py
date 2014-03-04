@@ -14,6 +14,7 @@ team = Blueprint('team', __name__,template_folder='../template')
 
 @team.route('/', defaults={'year': ''})
 @team.route('/<year>')
+@cached()
 def show(year):
 
   eventQuery = Event.query.join(Team).group_by(Event).order_by(desc(Event.name)).having(func.count(Team.id)>0).all()

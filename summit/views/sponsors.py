@@ -14,6 +14,7 @@ sponsors = Blueprint('sponsors', __name__,template_folder='../template')
 
 @sponsors.route('/', defaults={'year': ''})
 @sponsors.route('/<year>')
+@cached()
 def show(year):
 
   eventQuery = Event.query.join(Sponsorship).group_by(Event).order_by(desc(Event.name)).having(func.count(Sponsorship.id)>0).all()
@@ -34,6 +35,23 @@ def show(year):
     sponsors_html += '<h2>%s</h2>' % sponsorship.name
 
     for sponsor in sponsorship.sponsor:
-      sponsors_html += sponsor.name+'<br>'
+      if(sponsor.get_logo_vector_url()):
+        sponsors_html += '<div class="sponsor">'
+        sponsors_html += '<div>'
+        sponsors_html += '<object alt="%s" data="%s" type="image/svg+xml" width="210" height="110"><param name="src" value="%s"></object>' % (sponsor.name, sponsor.get_logo_vector_url(), sponsor.get_logo_vector_url());
+        sponsors_html += '</div>'
+        sponsors_html += '</div>'
+      elif(sponsor.get_logo_raster_url()):
+        sponsors_html += '<div class="sponsor">'
+        sponsors_html += '<div>'
+        sponsors_html += '<img alt="%s" width="210" height="110" src="%s">' % (sponsor.name, sponsor.get_logo_raster_url());
+        sponsors_html += '</div>'
+        sponsors_html += '</div>'
+      else:
+        sponsors_html += '<div class="sponsor">'
+        sponsors_html += '<div>'
+        sponsors_html += sponsor.name
+        sponsors_html += '</div>'
+        sponsors_html += '</div>'
 
   return render_template('page.html',title='Sponsors',content=sponsors_html,subnavbar=subnavbar,subnavbar_current=year)
