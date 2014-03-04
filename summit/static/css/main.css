@@ -371,7 +371,7 @@ h2 {
   font-size:12px;
 }
 .program_readdescription:after {
-  content:"READ DESCRIPTION\00A0\00A0\25B6";
+  content:"READ MORE\00A0\00A0\25B6";
 }
 
 .program_backtotop {

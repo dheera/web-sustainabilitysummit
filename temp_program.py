@@ -1,7 +1,7 @@
 # one-time script to import the old JSON data into new model
 
-from database import db_session
-from models import *
+from summit.database import db_session
+from summit.models import *
 import json
 import re
 
