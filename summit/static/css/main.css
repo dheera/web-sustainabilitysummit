@@ -335,19 +335,14 @@ h2 {
   font-weight:bold;
 }
 
-.program_person_title {
-  text-transform:uppercase;
-  font-size:14px;
+.program_person_titleorg {
+  font-size:16px;
 }
 
-.program_person_title:after {
-  content:', ';
-  font-size:14px;
-}
-
-.program_person_org {
-  content:', ';
-  font-size:14px;
+.program_person_description {
+  margin-top:15px;
+  font-size:16px;
+  display:none;
 }
 
 .program_row:nth-child(2n) .program_session {
@@ -366,19 +361,31 @@ h2 {
 .program_session_name {
 
 }
+.program_readdescription {
+  display:inline-block;
+  margin-top:1em;
+  padding:4px 10px 4px 10px;
+  background:#e0e0e0;
+  color:#808080;
+  font-weight:bold;
+  font-size:12px;
+}
+.program_readdescription:after {
+  content:"READ DESCRIPTION\00A0\00A0\25B6";
+}
 
 .program_backtotop {
   float:right;
   margin-top:1em;
+  margin-left:20px;
   padding:4px 10px 4px 10px;
-  background:#c0c0c0;
-  color:#ffffff;
+  background:#e0e0e0;
+  color:#a0a0a0;
   font-weight:bold;
   font-size:12px;
 }
 .program_backtotop:after {
-  content:"\25B2\00A0\00A0 BACK TO PROGRAM";
-
+  content:"\25B2";
 }
 .content_title {
   display:inline-block;

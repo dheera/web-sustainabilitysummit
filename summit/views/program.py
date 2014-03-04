@@ -95,7 +95,7 @@ def show(year):
       program_html += '</div>'
 
     program_html += '<br><br>'
-    program_html += '<h2>Session descriptions</h2>'
+    program_html += '<h2>Session descriptions</h2><br>'
 
     for timeslot in event.timeslot:
       for session in timeslot.session:
@@ -107,7 +107,13 @@ def show(year):
           for person in session.person:
             program_html += '<div class="program_person">'
             program_html += '<div class="program_person_cell"><img src="'+person.get_picture_url(size='120x120')+'"></div>'
-            program_html += '<div class="program_person_cell"><div class="program_person_name">%s %s</div><span class="program_person_title">%s</span><span class="program_person_org">%s</span></div>' % (person.firstname, person.lastname, person.title, person.org)
+            program_html += '<div class="program_person_cell">'
+            program_html += '<div class="program_person_name">%s %s</div>' % (person.firstname, person.lastname)
+            program_html += '<div class="program_person_titleorg">%s, %s</div>' % (person.title.upper(), person.org)
+            if(person.description):
+              program_html += '<div class="program_readdescription clickable" onclick="$(this).next(\'.program_person_description\').slideToggle()"></div>'
+            program_html += '<div class="program_person_description">%s</div>' % person.description
+            program_html += '</div>'
             program_html += '</div>'
           program_html += '<br><br>'
 
