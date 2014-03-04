@@ -3,6 +3,7 @@ from jinja2 import TemplateNotFound
 from summit.database import db_session
 from summit.models import *
 from summit.cache import cached
+from summit.slugify import slugify
 
 from sqlalchemy import desc
 from sqlalchemy.orm import subqueryload
@@ -82,7 +83,11 @@ def show(year):
       program_html += '<div class="program_time">%s</div>' % timeslot.time_start.strftime("%H:%M")
       program_html += '<div class="program_timeslot">'
       for session in timeslot.session:
-        program_html += '<div class="program_session">'
+        if session.description.strip() != "" or len(session.person)>0:
+          program_html += '<div class="program_session" style="cursor:pointer;cursor:hand;" onclick="window.location.href=\'#%s\'">' % slugify(session.name)
+          program_html += '<span style="font-size:12px;"><a href="#%s">READ MORE &raquo;</a></span>' % slugify(session.name)
+        else:
+          program_html += '<div class="program_session">'
         program_html += '<div class="program_session_name">%s</div>' % session.name
         program_html += '</div>'
 
@@ -92,6 +97,7 @@ def show(year):
     for timeslot in event.timeslot:
       for session in timeslot.session:
         if session.description.strip() != "" or len(session.person)>0:
+          program_html += '<a name="%s"></a>' % slugify(session.name)
           program_html += '<h3>%s</h3>' % session.name
           program_html += session.description
           for person in session.person:
