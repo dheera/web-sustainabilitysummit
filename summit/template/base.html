@@ -1,9 +1,19 @@
+{% set navbar = [
+    ('/register/', 'register', 'register'),
+    ('/about/', 'about', 'about'),
+    ('/venue/', 'venue', 'venue'),
+    ('/program/', 'program', 'program'),
+    ('/photos/', 'photos', 'photos'),
+    ('/sponsors/', 'sponsors', 'sponsors'),
+    ('/team/', 'team', 'team'),
+] -%}
 <!doctype html>
 <html lang="en">
 
 <head>
   {% block head %}
   <meta http-equiv="Content-type" content="text/html;charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <link rel="stylesheet" href="/static/css/main.css">
   <link rel="stylesheet" href="/static/css/swipebox.css">
   <script type="text/javascript" src="/js/jquery-2.0.3.min.js"></script>
@@ -11,24 +21,40 @@
   <script type="text/javascript" src="/js/main.js"></script>
   <link rel="image_src" href="/images/logo_1000.png">
   <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
-  <meta name="viewport" content="width=990">
   <title>{% block title %}{% endblock %} | MIT Sustainability Summit</title>
   {% endblock %}
 </head>
 
 <body>
-  <div align="center" style="background:#f0f0f0 url(/static/images/topbg.png);border-bottom:2px solid #c0c0c0;-webkit-box-sahadow:0px 4px 12px #a0a0a0;-moz-box-shadow:0px 4px 12px #a0a0a0;-ms-box-shadow:0px 4px 12px #a0a0a0;box-sahadow:0px 4px 12px #a0a0a0;">
-    <div align="left" style="width:980px;padding:0px;border-lft:0px solid #808080;border-right:0px solid #808080;border-bottom:0px;">
-      <div style="position:absolute;padding-top:25px;padding-bottom:25px;z-index:100;background:url(images/blank.gif);width:400px;height:65px;-moz-user-select:none;-webkit-user-select:none;"></div>
-      <div style="padding-right:30px;vertical-align:middle;display:inline-block;padding-top:25px;padding-bottom:25px;"><object data="/static/images/logo_web.svg" width="300" height="49" type="image/svg+xml"><img src="/static/images/logo_web.png" width="300" height="49"></object></div><div class="navbar_separator"></div><div class="navbar_item">register</div><div class="navbar_separator"></div><div class="navbar_item">about</div><div class="navbar_separator"></div><div class="navbar_item">venue</div><div class="navbar_separator"></div><div class="navbar_item">program</div><div class="navbar_separator"></div><div class="navbar_item">photos</div><div class="navbar_separator"></div><div class="navbar_item">sponsors</div><div class="navbar_separator"></div><div class="navbar_item">team</div>
+  <div class="topbar">
+    <div style="margin-left:auto;margin-right:auto;max-width:980px;padding:0px;border-lft:0px solid #808080;border-right:0px solid #808080;border-bottom:0px;">
+      <div class="logo">
+      <div onclick="window.location.href='/';" class="ui_cover" style="cursor:pointer;cursor:hand;"></div><object data="/static/images/logo_web.svg" type="image/svg+xml"><img src="/static/images/logo_web.png"></object></div>
+
+<ul class="navbar">
+{% for href, id, caption in navbar %}
+  <li{% if id == active_page %} class="navbar_active"{% endif
+  %}><a href="{{ href|e }}">{{ caption|e }}</a></li>
+{% endfor %}
+</ul>
+
+<div class="navbar_mobile">
+<select onchange="if(this.value!=='') window.location.href=this.value;">
+<option value="">Site Menu</option>
+{% for href, id, caption in navbar %}
+<option value="{{ href }}">{{ caption|e }}</option>
+{% endfor %}
+</select>
+</div>
+
     </div>
   </div>
   <div></div>
 
-  <div id="content">{% block content %}{% endblock %}</div>
-  <div id="footer">
+  <div class="content">{% block content %}{% endblock %}</div>
+  <div class="footer">
     <div align="center">
-      <div align="left" style="width:1000px;padding:0px;border-lft:0px solid #808080;border-right:0px solid #808080;border-bottom:0px;">
+      <div align="left" style="max-width:1000px;padding:0px;border-lft:0px solid #808080;border-right:0px solid #808080;border-bottom:0px;">
         {% block footer %}
         &copy; Copyright 2014 MIT. All rights reserved. Questions, comments, or suggestions? Please contact us at <b>sustainabilitysummit at mit dot edu</b>.
         {% endblock %}

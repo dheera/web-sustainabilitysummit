@@ -6,6 +6,7 @@ import json
 pages = Blueprint('pages', __name__,template_folder='../template')
 
 @pages.route('/<pages>')
+@pages.route('/<pages>/')
 def show(pages):
   try:
     isHeaderFinished=0

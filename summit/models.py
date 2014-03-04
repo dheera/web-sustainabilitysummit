@@ -101,7 +101,7 @@ class Timeslot(Base):
     self.event_id=event_id
 
   def __repr__(self):
-    return '<Timeslot %r>' % (self.name)
+    return '<Timeslot %r>' % (self.event_id + ' ' + self.time_start)
 
 # conference session (e.g. Lunch, Registration,
 # Keynote, Breakout Session 1, Workshop 4, etc.)

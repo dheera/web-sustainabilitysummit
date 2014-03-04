@@ -11,7 +11,7 @@ with open('.dbpassword') as fp:
 db_name = 'sustainability+summit'
 
 db_url = "mysql://%s:%s@%s/%s?charset=utf8&use_unicode=1" % (db_username, db_password, db_server, db_name)
-db_engine = create_engine(db_url, convert_unicode=True, pool_recycle=3600)
+db_engine = create_engine(db_url, convert_unicode=True, pool_size=10, pool_recycle=120)
 db_session = scoped_session(sessionmaker(autocommit=False,
                                          autoflush=False,
                                          bind=db_engine))

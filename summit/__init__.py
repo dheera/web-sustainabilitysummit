@@ -1,6 +1,9 @@
 from flask import Flask,request,render_template
+from database import db_session
+#from flask.ext.mobility import Mobility
 
 app = Flask(__name__)
+#Mobility(app)
 
 # front page
 from views.home import home

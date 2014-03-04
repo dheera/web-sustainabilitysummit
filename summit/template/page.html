@@ -1,12 +1,27 @@
 {% extends "base.html" %}
 {% block title %}{{ title }}{% endblock %}
 {% block content %}
-  <div align="center">
-    <div align="left" style="width:980px;padding-top:40px;padding-bottom:100px;">
-      <h1>{{ title }}</h1>
+    <div class="content_page">
+      <div>
+
+<h1 class="content_title">{{ title }}</h1>
+<ul class="subnavbar">
+{% for href, id, caption in subnavbar %}
+  <li{% if id == subnavbar_current %} class="subnavbar_active"{% endif
+  %}><a href="{{ href|e }}">{{ caption|e }}</a></li>
+{% endfor %}
+</ul>
+<div class="subnavbar_mobile">
+<select onchange="if(this.value!=='') window.location.href=this.value;">
+{% for href, id, caption in subnavbar %}
+<option value="{{ href }}"{% if id == subnavbar_current %} selected="selected"{% endif %}>{{ caption|e }}</option>
+{% endfor %}
+</select>
+</div>
+
+      </div>
       <div>
         {{ content|safe }}
       </div>
     </div>
-  </div>
 {% endblock %}
