@@ -1,11 +1,11 @@
 {% set navbar = [
-    ('/register/', 'register', 'register'),
-    ('/about/', 'about', 'about'),
-    ('/venue/', 'venue', 'venue'),
-    ('/program/', 'program', 'program'),
-    ('/photos/', 'photos', 'photos'),
-    ('/sponsors/', 'sponsors', 'sponsors'),
-    ('/team/', 'team', 'team'),
+    ('/register', 'register', 'register'),
+    ('/about', 'about', 'about'),
+    ('/venue', 'venue', 'venue'),
+    ('/program', 'program', 'program'),
+    ('/photos', 'photos', 'photos'),
+    ('/sponsors', 'sponsors', 'sponsors'),
+    ('/team', 'team', 'team'),
 ] -%}
 <!doctype html>
 <html lang="en">
@@ -30,10 +30,9 @@
     <div style="margin-left:auto;margin-right:auto;max-width:980px;padding:0px;border-lft:0px solid #808080;border-right:0px solid #808080;border-bottom:0px;">
       <div class="logo">
       <div onclick="window.location.href='/';" class="ui_cover" style="cursor:pointer;cursor:hand;"></div><object data="/static/images/logo_web.svg" type="image/svg+xml"><img src="/static/images/logo_web.png"></object></div>
-
 <ul class="navbar">
 {% for href, id, caption in navbar %}
-  <li class="clickable{% if id == active_page %} navbar_active{% endif
+  <li class="clickable{% if request.path.find(href) == 0 %} navbar_active{% else %} navbar_inactive{% endif
   %}" onclick="window.location.href='{{ href|e }}'"><a href="{{ href|e }}">{{ caption|e }}</a></li>
 {% endfor %}
 </ul>

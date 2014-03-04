@@ -112,16 +112,8 @@ h2 {
   display:inline-block;
   -moz-user-select:none;
   -webkit-user-select:none;
-}
-
-.navbar_separator {
-  display:inline-block;
-  vertical-align:middle;
-  width:2px;
-  height:32px;
-  border-left:2px solid #d0d0d0;
-  padding-left:10px;
-  margin-left:10px;
+  float:right;
+  margin-top:36px;
 }
 
 .navbar li {
@@ -131,13 +123,25 @@ h2 {
   height:32px;
   text-align:left;
   font-size:15px;
-  border-left:2px solid #d0d0d0;
+  border-left:2px solid #d8d8d8;
   padding-left:10px;
   margin-left:10px;
+  color:#303030;
   font-family: sustainabilitysummit;
 }
-.navbar li a {
+.navbar li:last-child {
+  width:auto;
+}
+.navbar_inactive a {
   color:#000000;
+  font-weight:normal;
+  text-decoration:none;
+  border-bottom:none;
+}
+
+.navbar_active a {
+  color:#000000;
+  font-weight:bold;
   text-decoration:none;
   border-bottom:none;
 }
@@ -153,6 +157,7 @@ h2 {
   cursor:pointer;
   cursor:hand;
   background:#e0e0e0;
+  color:#000000;
   border:2px solid #c0c0c0;
   display:inline-block;
   vertical-align:middle;
@@ -199,6 +204,7 @@ h2 {
   cursor:pointer;
   cursor:hand;
   background:#ffffff;
+  color:#000000;
   border:0;
   display:inline-block;
   vertical-align:middle;
