@@ -40,7 +40,7 @@
 
 <div class="navbar_mobile">
 <select onchange="if(this.value!=='') window.location.href=this.value;">
-<option value="">Site Menu</option>
+<option value="">Menu</option>
 {% for href, id, caption in navbar %}
 <option value="{{ href }}">{{ caption|e }}</option>
 {% endfor %}

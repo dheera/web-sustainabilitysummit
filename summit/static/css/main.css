@@ -222,6 +222,43 @@ h1 {
   background:#e0e0e0;
   border:2px solid white;
 }
+
+.program_person {
+  display:table;
+  margin-top:15px;
+  margin-bottom:15px;
+}
+
+.program_person_cell {
+  display:table-cell;
+  vertical-align:top;
+}
+
+.program_person img {
+  width:120px;
+  height:120px;
+  margin-right:20px;
+}
+
+.program_person_name {
+  font-weight:bold;
+}
+
+.program_person_title {
+  text-transform:uppercase;
+  font-size:14px;
+}
+
+.program_person_title:after {
+  content:', ';
+  font-size:14px;
+}
+
+.program_person_org {
+  content:', ';
+  font-size:14px;
+}
+
 .program_row:nth-child(2n) .program_session {
   background: #c8c8c8;
 }
@@ -277,13 +314,16 @@ h1 {
   }
 }
 
-@media screen and (max-width: 500px) and (min-width: 100px) {
+@media screen and (max-width: 480px) and (min-width: 100px) {
+  .logo {
+    padding-right:5px;
+  }
   .logo .ui_cover, .logo object, .logo img {
-    width:180px;
-    height:29px;
+    width:220px;
+    height:36px;
   }
   .navbar_mobile {
-    margin-top:20px;
+    margin-top:24px;
   }
 }
 @media screen and (max-width: 1000px) and (min-width: 800px) {

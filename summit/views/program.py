@@ -2,23 +2,30 @@ from flask import Blueprint, render_template, abort
 from jinja2 import TemplateNotFound
 from summit.database import db_session
 from summit.models import *
+from summit import cached
 
 from sqlalchemy import desc
+from sqlalchemy.orm import subqueryload
 
 import json
-import datetime, time
+import datetime, time, os
+from subprocess import call
 
 program = Blueprint('program', __name__,template_folder='../template')
 
 @program.route('/', defaults={'year': ''})
 @program.route('/<year>')
+@cached()
 def show(year):
   try:
 
     if year=='':
       year = '2014'
 
-    eventQuery = Event.query.filter(Event.name == year)
+    # not supported by scripts
+    # eventQuery = Event.query.options(subqueryload(Event.timeslot).subqueryload(Timeslot.session).subqueryload(Session.person)).filter(Event.name == year)
+
+    eventQuery = Event.query.options(subqueryload(Event.timeslot)).filter(Event.name == year)
     if(eventQuery.count()==1):
       # the requested program exists (e.g. /program/2012)
       event = eventQuery.first()
@@ -30,6 +37,7 @@ def show(year):
     for e in Event.query.order_by(desc(Event.name)).all():
       subnavbar.append(('/program/'+e.name,e.name,e.name))
     subnavbar_current=year;
+
 
     program_html = ''
     program_html += '<div class="program">'
@@ -48,20 +56,27 @@ def show(year):
       for session in timeslot.session:
         program_html += '<div class="program_session">'
         program_html += '<div class="program_session_name">%s</div>' % session.name
-#        program_html+='<div class="program_cell_session_description">%s</div>' % session.description
         program_html += '</div>'
       program_html += '</div>'
       program_html += '</div>'
     program_html += '</div>'
 
+
     program_html += '<br/><br/>'
+
 
     for timeslot in event.timeslot:
       for session in timeslot.session:
         if session.description.strip() != "":
           program_html += '<h3>%s</h3>' % session.name
           program_html += session.description
-          program_html += '<br><br>'
+          for person in session.person:
+            program_html += '<div class="program_person">'
+            program_html += '<div class="program_person_cell"><img src="/thumb/person/%s/120x120"></div>' % person.id
+            program_html += '<div class="person_program_cell"><div class="program_person_name">%s %s</div><span class="program_person_title">%s</span><span class="program_person_org">%s</span></div>' % (person.firstname, person.lastname, person.title, person.org)
+            program_html += '</div>'
+
+
     return render_template('page.html',title='Program',content=program_html,subnavbar=subnavbar,subnavbar_current=subnavbar_current)
   except IOError:
     abort(404)
