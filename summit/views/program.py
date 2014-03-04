@@ -2,7 +2,7 @@ from flask import Blueprint, render_template, abort
 from jinja2 import TemplateNotFound
 from summit.database import db_session
 from summit.models import *
-from summit import cached
+from summit.cache import cached
 
 from sqlalchemy import desc
 from sqlalchemy.orm import subqueryload
@@ -67,7 +67,7 @@ def show(year):
 
     for timeslot in event.timeslot:
       for session in timeslot.session:
-        if session.description.strip() != "":
+        if session.description.strip() != "" or len(session.person)>0:
           program_html += '<h3>%s</h3>' % session.name
           program_html += session.description
           for person in session.person:

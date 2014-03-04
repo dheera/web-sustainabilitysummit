@@ -2,7 +2,6 @@ from flask import Blueprint, render_template, abort, Response, send_file
 from jinja2 import TemplateNotFound
 from summit.database import db_session
 from summit.models import *
-from summit import cached
 
 from sqlalchemy import desc
 from sqlalchemy.orm import subqueryload
@@ -17,7 +16,7 @@ thumb = Blueprint('thumb', __name__,template_folder='../template')
 @thumb.route('/<object_type>/<object_id>/<size>')
 def show(object_type,object_id,size):
 
-  allowed_sizes = ['120x120']
+  allowed_sizes = ['120x120','240x240']
 
   if size not in allowed_sizes:
     abort(404)
