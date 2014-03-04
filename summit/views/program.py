@@ -48,7 +48,7 @@ def show(year):
       if(timeslot_last==0 or timeslot.time_start.strftime("%Y%m%d")!=timeslot_last.time_start.strftime("%Y%m%d")):
         program_html += '<div class="program_row">'
         program_html += '<div class="program_date">'
-        program_html += timeslot.time_start.strftime("%A, %e %B %Y")
+        program_html += timeslot.time_start.strftime("<b>%A</b> %e %B %Y")
         program_html += '</div>'
         program_html += '</div>'
       timeslot_last = timeslot
@@ -75,7 +75,7 @@ def show(year):
       if(timeslot_last==0 or timeslot.time_start.strftime("%Y%m%d")!=timeslot_last.time_start.strftime("%Y%m%d")):
         program_html += '<div class="program_row">'
         program_html += '<div class="program_date">'
-        program_html += timeslot.time_start.strftime("%A, %e %B %Y")
+        program_html += timeslot.time_start.strftime("<b>%A</b> %e %B %Y")
         program_html += '</div>'
         program_html += '</div>'
       timeslot_last = timeslot
@@ -84,7 +84,7 @@ def show(year):
       program_html += '<div class="program_timeslot">'
       for session in timeslot.session:
         if session.description.strip() != "" or len(session.person)>0:
-          program_html += '<div class="program_session" style="cursor:pointer;cursor:hand;" onclick="window.location.href=\'#%s\'">' % slugify(session.name)
+          program_html += '<div class="clickable program_session" onclick="window.location.href=\'#%s\'">' % slugify(session.name)
           program_html += '<span style="font-size:12px;"><a href="#%s">READ MORE &raquo;</a></span>' % slugify(session.name)
         else:
           program_html += '<div class="program_session">'
@@ -94,10 +94,14 @@ def show(year):
       program_html += '</div>'
       program_html += '</div>'
 
+    program_html += '<br><br>'
+    program_html += '<h2>Session descriptions</h2>'
+
     for timeslot in event.timeslot:
       for session in timeslot.session:
         if session.description.strip() != "" or len(session.person)>0:
           program_html += '<a name="%s"></a>' % slugify(session.name)
+          program_html += '<div class="clickable program_backtotop" onclick="window.location.href=\'#\'"></div>' 
           program_html += '<h3>%s</h3>' % session.name
           program_html += session.description
           for person in session.person:
@@ -105,6 +109,7 @@ def show(year):
             program_html += '<div class="program_person_cell"><img src="'+person.get_picture_url(size='120x120')+'"></div>'
             program_html += '<div class="program_person_cell"><div class="program_person_name">%s %s</div><span class="program_person_title">%s</span><span class="program_person_org">%s</span></div>' % (person.firstname, person.lastname, person.title, person.org)
             program_html += '</div>'
+          program_html += '<br><br>'
 
     program_html += '</div>'
 

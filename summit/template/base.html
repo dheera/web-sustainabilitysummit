@@ -21,7 +21,7 @@
   <script type="text/javascript" src="/static/js/main.js"></script>
   <link rel="image_src" href="/static/images/logo_1000.png">
   <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
-  <title>{% block title %}{% endblock %} | MIT Sustainability Summit</title>
+  <title>{% if title %}{% block title %}{% endblock %} | {% endif %}MIT Sustainability Summit</title>
   {% endblock %}
 </head>
 
@@ -33,8 +33,8 @@
 
 <ul class="navbar">
 {% for href, id, caption in navbar %}
-  <li{% if id == active_page %} class="navbar_active"{% endif
-  %}><a href="{{ href|e }}">{{ caption|e }}</a></li>
+  <li class="clickable{% if id == active_page %} navbar_active{% endif
+  %}" onclick="window.location.href='{{ href|e }}'"><a href="{{ href|e }}">{{ caption|e }}</a></li>
 {% endfor %}
 </ul>
 
