@@ -24,12 +24,36 @@ assoc_person_team = Table('assoc_person_team', Base.metadata,
 
 # sponsor can appear on multiple events,
 # and events have multiple sponsors
-assoc_event_sponsor = Table('assoc_event_sponsor', Base.metadata,
-  Column('event_id', Integer, ForeignKey('event.id')),
+assoc_sponsor_sponsorship = Table('assoc_sponsor_sponsorship', Base.metadata,
   Column('sponsor_id', Integer, ForeignKey('sponsor.id')),
+  Column('sponsorship_id', Integer, ForeignKey('sponsorship.id')),
   mysql_engine='InnoDB',
   mysql_charset='utf8',
 )
+
+#assoc_event_sponsorship = Table('assoc_event_sponsorship', Base.metadata,
+#  Column('event_id', Integer, ForeignKey('event.id')),
+#  Column('sponsorship_id', Integer, ForeignKey('sponsorship.id')),
+#  mysql_engine='InnoDB',
+#  mysql_charset='utf8',
+#)
+
+class Sponsorship(Base):
+  __tablename__ = 'sponsorship'
+  __table_args__ = {'mysql_engine':'InnoDB','mysql_charset':'utf8'}
+  id = Column(Integer, primary_key=True)
+  event_id = Column(Integer, ForeignKey('event.id'))
+  name = Column(String(255))
+  priority = Column(Integer)
+  sponsor = relationship('Sponsor', secondary=assoc_sponsor_sponsorship, backref='sponsorship')
+
+  def __init__(self, name=None, priority=0, event_id=None):
+    self.name=name
+    self.priority=priority
+    self.event_id=event_id
+
+  def __repr__(self):
+    return '<Sponsorship %r>' % (self.event_id + ' ' + self.name)
 
 # a conference sponsor entity, which is not tied to a particular event
 class Sponsor(Base):
@@ -38,7 +62,6 @@ class Sponsor(Base):
   id = Column(Integer, primary_key=True)
   name = Column(String(63))
   url = Column(String(255))
-  event = relationship('Event', secondary=assoc_event_sponsor, backref='sponsor')
 
   def __init__(self, name=None, url=None):
     self.name=name
@@ -46,6 +69,25 @@ class Sponsor(Base):
 
   def __repr__(self):
     return '<Sponsor %r>' % (self.name)
+
+  def get_logo_svg_url(self):
+
+    # the source image we are looking for
+    src_filename = 'summit/media/db-sponsor/'+str(self.id)
+
+    # where we hope to find a cached copy, or create one if it doesn't exist
+    cache_url = '/static/cache/sponsor_%s.svg' % str(self.id)
+    dest_filename = 'summit'+cache_url
+
+    if not os.path.exists(src_filename):
+      return None
+
+    if not os.path.exists(dest_filename):
+      call(["cp", src_filename, dest_filename])
+
+    return cache_url
+
+
 
 # a person, could be any person, speaker or team member
 class Person(Base):
@@ -75,7 +117,7 @@ class Person(Base):
   def get_picture_url(self,size='120x120'):
 
     # the source image we are looking for
-    src_filename = 'summit/media/picture.person/'+str(self.id)
+    src_filename = 'summit/media/db-person/'+str(self.id)
 
     # where we hope to find a cached copy, or create one if it doesn't exist
     cache_url = '/static/cache/person_%s_%s.jpg' % (str(self.id), size)
@@ -97,6 +139,8 @@ class Event(Base):
   id = Column(Integer, primary_key=True)
   name = Column(String(255), unique=True)
   timeslot = relationship('Timeslot', backref='event')
+  sponsorship = relationship('Sponsorship', backref='event')
+  team = relationship('Team', backref='event')
 
   def __init__(self, name=None):
     self.name=name

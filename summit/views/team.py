@@ -4,7 +4,7 @@ from summit.database import db_session
 from summit.models import *
 from summit.cache import cached
 
-from sqlalchemy import desc
+from sqlalchemy import desc, func
 from sqlalchemy.orm import subqueryload
 from subprocess import call
 
@@ -15,27 +15,22 @@ team = Blueprint('team', __name__,template_folder='../template')
 @team.route('/', defaults={'year': ''})
 @team.route('/<year>')
 def show(year):
+
+  eventQuery = Event.query.join(Team).group_by(Event).order_by(desc(Event.name)).having(func.count(Team.id)>0).all()
+
+  subnavbar=list(('/team/'+e.name,e.name,e.name) for e in eventQuery)
+
   if year=='':
-    year = '2014'
-
-  eventQuery = Event.query.filter(Event.name == year)
-  if(eventQuery.count()==1):
-    event = eventQuery.first()
+    year = subnavbar[0][1]
   else:
-    abort(404)
+    if not year in tuple(e.name for e in eventQuery):
+      abort(404)
 
-  subnavbar=[]
-  for e in Event.query.order_by(desc(Event.name)).all():
-    subnavbar.append(('/team/'+e.name,e.name,e.name))
-  subnavbar_current=year;
-
-  teamQuery = Team.query.filter(Team.event_id == event.id)
-  if(teamQuery.count()==0):
-    abort(404)
+  event = Event.query.filter(Event.name == year).first()
 
   team_html=''
 
-  for team in teamQuery:
+  for team in event.team:
     team_html += '<h2>%s</h2>' % team.name
 
     for person in team.person:
@@ -51,4 +46,4 @@ def show(year):
       team_html += '</div>'
       team_html += '<br><br>'
 
-  return render_template('page.html',title='Team',content=team_html,subnavbar=subnavbar,subnavbar_current=subnavbar_current)
+  return render_template('page.html',title='Team',content=team_html,subnavbar=subnavbar,subnavbar_current=year)

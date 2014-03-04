@@ -25,6 +25,10 @@ app.register_blueprint(photos,url_prefix='/photos')
 from views.program import program
 app.register_blueprint(program,url_prefix='/program')
 
+# sponsor page from database
+from views.sponsors import sponsors
+app.register_blueprint(sponsors,url_prefix='/sponsors')
+
 # team page from database
 from views.team import team
 app.register_blueprint(team,url_prefix='/team')
