@@ -46,7 +46,7 @@ def show(year):
 
     for session in timeslot.session:
       if session.description!='':
-        program_html += '<div class="program_mobile_row_clickable" onclick="$(this).next(\'.program_mobile_session_description\').slideToggle()">'
+        program_html += '<div class="clickable program_mobile_row_clickable" onclick="$(this).next(\'.program_mobile_session_description\').slideToggle()">'
       else:
         program_html += '<div class="program_mobile_row">'
       program_html += '<div class="program_mobile_icon"></div>'
@@ -56,6 +56,14 @@ def show(year):
       if session.description!='':
         program_html += '<div class="program_mobile_session_description">'
         program_html += session.description
+        for person in session.person:
+          program_html += '<div class="clickable program_mobile_session_person" onclick="$(this).next(\'.program_mobile_session_person_description\').slideToggle()">'
+          program_html += '<img src="%s" style="width:60px;height:60px;float:left;margin-right:15px;margin-top:5px;">' % person.get_picture_url(size='60x60')
+          program_html += '<b>%s %s</b><br>%s, %s' % (person.firstname, person.lastname, person.title, person.org)
+          program_html += '</div>'
+          program_html += '<div class="program_mobile_session_person_description">'
+          program_html += person.description
+          program_html += '</div>'
         program_html += '</div>'
 
   program_html += '</div>'

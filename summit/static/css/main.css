@@ -273,6 +273,26 @@ h2 {
   display:none;
 }
 
+.program_mobile_session_person {
+  font-size:16px;
+  padding-left:0px;
+  padding-right:0px;
+  padding-top:8px;
+  padding-bottom:8px;
+  background:#ffffff;
+  color:#000000;
+}
+.program_mobile_session_person_description {
+  font-size:16px;
+  padding-left:4px;
+  padding-right:4px;
+  padding-top:4px;
+  padding-bottom:25px;
+  background:#ffffff;
+  color:#000000;
+  display:none;
+}
+
 .program {
 
 }

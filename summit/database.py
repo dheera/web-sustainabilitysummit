@@ -28,6 +28,7 @@ def ping_connection(dbapi_connection, connection_record, connection_proxy):
   try:
     cursor.execute("SELECT 1")
   except:
+    connection_proxy._pool.dispose()
     raise exc.DisconnectionError()
   cursor.close()
 

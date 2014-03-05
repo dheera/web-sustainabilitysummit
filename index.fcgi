@@ -32,6 +32,15 @@ def code_changed(): # lovingly stolen from django. See above.
             _mtimes = {}
             return True
     return False
+
+class ScriptNameStripper(object):
+   def __init__(self, app):
+       self.app = app
+
+   def __call__(self, environ, start_response):
+       environ['SCRIPT_NAME'] = ''
+       return self.app(environ, start_response)
+
 def reload_on_edit():
     while True:
         if code_changed():
@@ -39,6 +48,7 @@ def reload_on_edit():
         else:
             time.sleep(1)
 
+app = ScriptNameStripper(app)
 
 if __name__ == '__main__':
     t = threading.Thread(target=reload_on_edit)
