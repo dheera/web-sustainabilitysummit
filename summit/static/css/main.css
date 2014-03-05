@@ -443,6 +443,43 @@ h2 {
   content:"\25B2";
 }
 
+.team_person {
+  display:table;
+  margin-top:15px;
+  margin-bottom:15px;
+}
+
+.team_mobile_person_cell {
+  display:table-cell;
+  vertical-align:top;
+}
+
+.team_mobile_person {
+  display:none;
+}
+
+.team_person_picture {
+  display:table-cell;
+  vertical-align:top;
+}
+
+.team_mobile_person_picture {
+  display:table-cell;
+  vertical-align:top;
+}
+
+.team_person_picture img {
+  width:120px;
+  height:120px;
+  margin-right:25px;
+}
+
+.team_mobile_person_picture img {
+  width:60px;
+  height:60px;
+  margin-right:15px;
+}
+
 .team_person_description {
   margin-top:15px;
   font-size:16px;
@@ -451,7 +488,11 @@ h2 {
 
 .team_mobile_person_description {
   margin-top:15px;
-  font-size:14px;
+  font-size:15px;
+  display:none;
+}
+
+.team_mobile_person_description_wrapper {
   display:none;
 }
 
@@ -477,6 +518,32 @@ h2 {
   -ms-box-shadow:2px 2px 8px #c0c0c0;
   -o-box-shadow:2px 2px 8px #c0c0c0;
   box-shadow:2px 2px 8px #c0c0c0;
+}
+
+.photos_thumbnail {
+  display:inline-block;
+  margin-top:0px;
+  margin-left:0px;
+  margin-right:5px;
+  margin-bottom:5px;
+  padding:0;
+  width:154px;
+  height:154px;
+  overflow:hidden;
+}
+
+.photos_thumbnail a {
+  padding:0;
+  margin:0;
+  border:0;
+  text-decoration:none;
+}
+.photos_thumbnail img {
+  width:154px;
+  height:154px;
+  padding:0;
+  margin:0;
+  border:0;
 }
 
 .content_title {
@@ -553,8 +620,14 @@ h2 {
     -o-box-shadow:none;
     box-shadow:none;
   }
+  .team_person {
+    display:none;
+  }
   .team_person_description {
     display:none;
+  }
+  .team_mobile_person {
+    display:block;
   }
   .team_mobile_person_description {
     display:block;

@@ -1,27 +1,26 @@
 {% extends "base.html" %}
 {% block title %}{{ title }}{% endblock %}
 {% block content %}
-    <div class="content_page">
-      <div>
-
-<h1 class="content_title">{{ title }}</h1>
-<ul class="subnavbar">
-{% for href, id, caption in subnavbar %}
-  <li{% if id == subnavbar_current %} class="subnavbar_active"{% endif
-  %}><a href="{{ href|e }}">{{ caption|e }}</a></li>
-{% endfor %}
-</ul>
-<div class="subnavbar_mobile">
-<select onchange="if(this.value!=='') window.location.href=this.value;">
-{% for href, id, caption in subnavbar %}
-<option value="{{ href }}"{% if id == subnavbar_current %} selected="selected"{% endif %}>{{ caption|e }}</option>
-{% endfor %}
-</select>
+<div class="content_page">
+  <div>
+    <h1 class="content_title">{{ title }}</h1>
+    {%- if subnavbar -%}
+      <ul class="subnavbar">
+      {%- for href, id, caption in subnavbar -%}
+        <li{% if id == subnavbar_current %} class="subnavbar_active"{% endif %}><a href="{{ href|e }}">{{ caption|e }}</a></li>
+      {%- endfor -%}
+      </ul>
+      <div class="subnavbar_mobile">
+        <select onchange="if(this.value!=='') window.location.href=this.value;">
+        {%- for href, id, caption in subnavbar -%}
+          <option value="{{ href }}"{% if id == subnavbar_current %} selected="selected"{% endif %}>{{ caption|e }}</option>
+        {%- endfor -%}
+        </select>
+      </div>
+    {%- endif -%}
+  </div>
+  <div>
+    {{ content|safe }}
+  </div>
 </div>
-
-      </div>
-      <div>
-        {{ content|safe }}
-      </div>
-    </div>
 {% endblock %}

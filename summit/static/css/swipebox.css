@@ -2,7 +2,7 @@ html.swipebox {
   overflow: hidden!important;
 }
 
-#swipebox-overlay img {
+#swipebox-overlay swipebox {
   border: none!important;
 }
 
@@ -30,7 +30,7 @@ html.swipebox {
 }
 
 #swipebox-slider .slide {
-  background: url("img/loader.gif") no-repeat center center;
+  background: url("swipebox/loader.gif") no-repeat center center;
   height: 100%;
   width: 100%;
   line-height: 1px;
@@ -46,7 +46,7 @@ html.swipebox {
   margin-right: -1px;
 }
 
-#swipebox-slider .slide img,
+#swipebox-slider .slide swipebox,
 #swipebox-slider .slide .swipebox-video-container {
   display: inline-block;
   max-height: 100%;
@@ -118,7 +118,7 @@ html.swipebox {
 
 #swipebox-action #swipebox-prev, #swipebox-action #swipebox-next,
 #swipebox-action #swipebox-close {
-  background-image: url("img/icons.png");
+  background-image: url("swipebox/icons.png");
   background-repeat: no-repeat;
   border: none!important;
   text-decoration: none!important;

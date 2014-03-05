@@ -14,7 +14,6 @@ team = Blueprint('team', __name__,template_folder='../template')
 
 @team.route('/', defaults={'year': ''})
 @team.route('/<year>')
-@cached()
 def show(year):
 
   eventQuery = Event.query.join(Team).group_by(Event).order_by(desc(Event.name)).having(func.count(Team.id)>0).all()
@@ -35,8 +34,8 @@ def show(year):
     team_html += '<h2>%s</h2>' % team.name
 
     for person in team.person:
-      team_html += '<div class="program_person">'
-      team_html += '<div class="program_person_cell"><img src="'+person.get_picture_url(size='120x120')+'"></div>'
+      team_html += '<div class="team_person">'
+      team_html += '<div class="team_person_picture"><img src="'+person.get_picture_url(size='120x120')+'"></div>'
       team_html += '<div class="program_person_cell">'
       team_html += '<div class="program_person_name">%s %s</div>' % (person.firstname, person.lastname)
       if(not team.name):
@@ -45,8 +44,19 @@ def show(year):
         team_html += '<div class="team_person_description">%s</div>' % person.description
       team_html += '</div>'
       team_html += '</div>'
+
+      team_html += '<div class="team_mobile_person clickable" onclick="$(this).next(\'.team_mobile_person_description_wrapper\').slideToggle()">'
+      team_html += '<div class="team_mobile_person_picture"><img src="'+person.get_picture_url(size='120x120')+'"></div>'
+      team_html += '<div class="team_mobile_person_cell">'
+      team_html += '<div class="program_person_name">%s %s</div>' % (person.firstname, person.lastname)
+      if(not team.name):
+        team_html += '<div class="program_person_titleorg">%s</div>' % person.title
+      team_html += '</div>'
+      team_html += '</div>'
       if(person.description):
+        team_html += '<div class="team_mobile_person_description_wrapper">'
         team_html += '<div class="team_mobile_person_description">%s</div>' % person.description
+        team_html += '</div>'
       team_html += '<br><br>'
 
   return render_template('page.html',title='Team',content=team_html,subnavbar=subnavbar,subnavbar_current=year)
