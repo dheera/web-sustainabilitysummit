@@ -40,11 +40,13 @@ def show(year):
       team_html += '<div class="program_person_cell">'
       team_html += '<div class="program_person_name">%s %s</div>' % (person.firstname, person.lastname)
       if(not team.name):
-        team_html += '<div class="program_person_titleorg">%s, %s</div>' % (person.title.upper(), person.org)
+        team_html += '<div class="program_person_titleorg">%s</div>' % person.title
       if(person.description):
-        team_html += '<div style="display:block;" class="program_person_description">%s</div>' % person.description
+        team_html += '<div class="team_person_description">%s</div>' % person.description
       team_html += '</div>'
       team_html += '</div>'
+      if(person.description):
+        team_html += '<div class="team_mobile_person_description">%s</div>' % person.description
       team_html += '<br><br>'
 
   return render_template('page.html',title='Team',content=team_html,subnavbar=subnavbar,subnavbar_current=year)

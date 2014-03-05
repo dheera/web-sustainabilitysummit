@@ -389,6 +389,18 @@ h2 {
   content:"\25B2";
 }
 
+.team_person_description {
+  margin-top:15px;
+  font-size:16px;
+  display:block;
+}
+
+.team_mobile_person_description {
+  margin-top:15px;
+  font-size:14px;
+  display:none;
+}
+
 .sponsor {
   width:230px;
   height:140px;
@@ -460,6 +472,38 @@ h2 {
   }
   .navbar_mobile {
     margin-top:24px;
+  }
+}
+@media screen and (max-width: 550px) and (min-width: 100px) {
+  .sponsor {
+    display:block;
+    border:0;
+    margin-left:auto;
+    margin-right:auto;
+    text-align:center;
+    -webkit-box-shadow:none;
+    -moz-box-shadow:none;
+    -ms-box-shadow:none;
+    -o-box-shadow:none;
+    box-shadow:none;
+  }
+  .sponsor div {
+    display:block;
+    margin-left:auto;
+    margin-right:auto;
+    text-align:center;
+    border:0;
+    -webkit-box-shadow:none;
+    -moz-box-shadow:none;
+    -ms-box-shadow:none;
+    -o-box-shadow:none;
+    box-shadow:none;
+  }
+  .team_person_description {
+    display:none;
+  }
+  .team_mobile_person_description {
+    display:block;
   }
 }
 @media screen and (max-width: 1000px) and (min-width: 800px) {

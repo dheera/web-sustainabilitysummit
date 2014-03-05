@@ -1,6 +1,7 @@
 from flask import Flask,request,render_template
 from database import db_session
 
+
 app = Flask(__name__)
 #Mobility(app)
 
