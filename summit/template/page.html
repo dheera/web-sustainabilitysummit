@@ -11,7 +11,7 @@
       {%- endfor -%}
       </ul>
       <div class="subnavbar_mobile">
-        <select onchange="if(this.value!=='') window.location.href=this.value;">
+        <select onchange="if(this.value!=='') { $('#loading').show(); window.location.href=this.value; }">
         {%- for href, id, caption in subnavbar -%}
           <option value="{{ href }}"{% if id == subnavbar_current %} selected="selected"{% endif %}>{{ caption|e }}</option>
         {%- endfor -%}

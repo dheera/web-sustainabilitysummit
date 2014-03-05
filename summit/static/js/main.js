@@ -12,3 +12,4 @@ var cssTransitionsSupported = false;
     cssTransitionsSupported = (div.firstChild.style.webkitTransition !== undefined) || (div.firstChild.style.MozTransition !== undefined);
     delete div;
 })();
+
