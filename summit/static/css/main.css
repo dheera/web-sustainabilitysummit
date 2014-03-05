@@ -632,6 +632,14 @@ h2 {
   .team_mobile_person_description {
     display:block;
   }
+  .photos_thumbnail img {
+    width:100%;
+    height:100%;
+  }
+  .photos_thumbnail {
+    width:30%;
+    height:auto;
+  }
 }
 @media screen and (max-width: 1000px) and (min-width: 800px) {
   .navbar {

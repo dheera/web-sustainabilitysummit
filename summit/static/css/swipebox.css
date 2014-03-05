@@ -46,7 +46,7 @@ html.swipebox {
   margin-right: -1px;
 }
 
-#swipebox-slider .slide swipebox,
+#swipebox-slider .slide img,
 #swipebox-slider .slide .swipebox-video-container {
   display: inline-block;
   max-height: 100%;
@@ -107,6 +107,7 @@ html.swipebox {
 #swipebox-caption {
   top: -50px;
   text-align: center;
+  display:none;
 }
 #swipebox-caption.visible-bars {
   top: 0;
