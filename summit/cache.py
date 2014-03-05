@@ -1,8 +1,8 @@
 from flask import Flask,request
-from werkzeug.contrib.cache import SimpleCache
+from werkzeug.contrib.cache import FileSystemCache
 
 CACHE_TIMEOUT = 300
-cache = SimpleCache()
+cache = FileSystemCache('summit/cache')
 
 class cached(object):
   def __init__(self, timeout=None):
