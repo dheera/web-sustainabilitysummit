@@ -1,9 +1,13 @@
 from flask import Flask,request,render_template
 from database import db_session
 
-
 app = Flask(__name__)
 #Mobility(app)
+
+@app.teardown_request
+def shutdown_session(exception=None):
+    db_session.remove()
+
 
 # front page
 from views.home import home

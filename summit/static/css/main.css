@@ -130,10 +130,15 @@ h2 {
 
 .navbar {
   display:inline-block;
+  float:right;
   -moz-user-select:none;
   -webkit-user-select:none;
-  float:right;
   margin-top:36px;
+  clear:both;
+}
+
+.navbar:after {
+  clear:both;
 }
 
 .navbar li {
@@ -189,7 +194,7 @@ h2 {
 
 .subnavbar {
   float:right;
-  margin-top:45px;
+  margin-top:40px;
   display:inline-block;
   -moz-user-select:none;
   -webkit-user-select:none;
@@ -584,6 +589,9 @@ h2 {
   padding:20px;
   color:#ffffff;
   font-size:14px; 
+}
+.footer div {
+  max-width:980px;margin-left:auto;margin-right:auto;
 }
 
 @media screen and (max-width: 800px) and (min-width: 100px) {
