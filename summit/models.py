@@ -70,7 +70,7 @@ class Sponsor(Base):
   def __repr__(self):
     return '<Sponsor %r>' % (self.name)
 
-  def get_logo_raster_url(self,size='210x110'):
+  def get_logo_raster_url(self,size='420x220'):
 
     # the source image we are looking for
     src_filename = 'summit/media/db-sponsor/%s.png' % str(self.id)

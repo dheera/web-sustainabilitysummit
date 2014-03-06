@@ -35,23 +35,26 @@ def show(year):
     sponsors_html += '<h2>%s</h2>' % sponsorship.name
 
     for sponsor in sponsorship.sponsor:
-      if(sponsor.get_logo_vector_url()):
-        sponsors_html += '<div class="sponsor">'
-        sponsors_html += '<div>'
-        sponsors_html += '<object alt="%s" data="%s" type="image/svg+xml" width="210" height="110"><param name="src" value="%s"></object>' % (sponsor.name, sponsor.get_logo_vector_url(), sponsor.get_logo_vector_url());
-        sponsors_html += '</div>'
-        sponsors_html += '</div>'
-      elif(sponsor.get_logo_raster_url()):
-        sponsors_html += '<div class="sponsor">'
-        sponsors_html += '<div>'
-        sponsors_html += '<img alt="%s" width="210" height="110" src="%s">' % (sponsor.name, sponsor.get_logo_raster_url());
-        sponsors_html += '</div>'
-        sponsors_html += '</div>'
+      vector_url = sponsor.get_logo_vector_url()
+      raster_url = sponsor.get_logo_raster_url()
+
+      if(False and vector_url): # until we find a workaround for Chrome <object> bug which has been around for years
+        sponsors_html += '<div class="sponsor" style="cursor:pointer;cursor:hand;" onclick="window.location.href=\'%s\';">' % sponsor.url
+        sponsors_html += '<div class="ui_cover" style="width:210px;height:110px;"></div>'
+        sponsors_html += '<object alt="%s" data="%s" type="image/svg+xml" width="210" height="110"><param name="src" value="%s">' % (sponsor.name, vector_url, vector_url);
+        sponsors_html += '<img alt="%s" width="210" height="110" src="%s">' % (sponsor.name, raster_url);
+        sponsors_html += '</object>'
+        sponsors_html += '</div> '
+      elif(raster_url):
+        sponsors_html += '<div class="sponsor clickable" onclick="window.location.href=\'%s\';">' % sponsor.url
+        sponsors_html += '<div class="ui_cover" style="width:210px;height:110px;"></div>'
+        sponsors_html += '<img alt="%s" style="width:210px;height:110px;" src="%s">' % (sponsor.name, raster_url);
+        sponsors_html += '</div> '
       else:
-        sponsors_html += '<div class="sponsor">'
+        sponsors_html += '<div class="sponsor clickable" onclick="window.location.href=\'%s\';">' % sponsor.url
         sponsors_html += '<div>'
         sponsors_html += sponsor.name
         sponsors_html += '</div>'
-        sponsors_html += '</div>'
+        sponsors_html += '</div> '
 
   return render_template('page.html',title='Sponsors',content=sponsors_html,subnavbar=subnavbar,subnavbar_current=year)
