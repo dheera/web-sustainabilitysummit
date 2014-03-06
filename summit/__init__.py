@@ -2,21 +2,15 @@ from flask import Flask,request,render_template
 from database import db_session
 
 app = Flask(__name__)
-#Mobility(app)
 
+# sql.mit.edu's version of Flask doesn't support teardown_appcontext
 @app.teardown_request
 def shutdown_session(exception=None):
-    db_session.remove()
-
+  db_session.remove()
 
 # front page
 from views.home import home
 app.register_blueprint(home)
-
-#REPLACED by methods added to ORM models
-# thumbnails of objects
-#from views.thumb import thumb
-#app.register_blueprint(thumb,url_prefix='/thumb')
 
 # static content that needs only templating (e.g. about, venue, etc.)
 from views.pages import pages

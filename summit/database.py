@@ -8,15 +8,7 @@ from sqlalchemy import event
 from sqlalchemy.pool import Pool
 from sqlalchemy.exc import DisconnectionError
 
-#def ping_connection(dbapi_connection, connection_record, connection_proxy):
-#  cursor = dbapi_connection.cursor()
-#  try:
-#    cursor.execute("SELECT 1")
-#  except:
-#    #connection_proxy._pool.dispose()
-#    raise exc.DisconnectionError()
-#  cursor.close()
-
+# pessimistic for sql.mit.edu
 def checkout_listener(dbapi_con, con_record, con_proxy):
   try:
     try:
@@ -31,10 +23,11 @@ def checkout_listener(dbapi_con, con_record, con_proxy):
 
 db_server = 'sql.mit.edu'
 db_username = 'sustainability'
+db_name = 'sustainability+summit'
+
 # keep database password off github
 with open('.dbpassword') as fp:
   db_password = string.strip(fp.read())
-db_name = 'sustainability+summit'
 
 db_url = "mysql://%s:%s@%s/%s?charset=utf8&use_unicode=1" % (db_username, db_password, db_server, db_name)
 db_engine = create_engine(db_url, convert_unicode=True, pool_size=20, pool_recycle=30, echo_pool='debug')
@@ -44,7 +37,6 @@ db_session = scoped_session(sessionmaker(autocommit=False, autoflush=False, bind
 
 Base = declarative_base()
 Base.query = db_session.query_property()
-
 
 def init_db():
     # import all modules here that might define models so that
