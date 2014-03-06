@@ -1,17 +1,54 @@
-<!doctype html>
-<html>
-<head>
+<html><head>
+<script type="text/javascript" src="/static/js/jquery-2.0.3.min.js"></script>
+<script type="text/javascript" src="/static/js/jquery.transit.min.js"></script>
+<meta charset="UTF-8">
 <style type="text/css">
 <!--
 body {
   margin:0;
 }
+
+.slide {
+  position:absolute;
+  top:0px;
+  left:0px;
+  width:100%;
+  height:100%;
+}
+
+.slide_img {
+  width:100%;
+}
+
+#train0 {
+  -webkit-transition: -webkit-transform 1s ease;
+}
+
 -->
 </style>
-<title>Banner</title></head>
-<body>
-<div align="center">
-<img src="/static/banner-files/2014/bigwave.jpg" style="max-width:1500px;width:100%;">
+</head><body>
+
+<div id="train0">
+<div class="slide" id="slide0">
+  <img class="slide_img" src="banner-files/2014/0-bg.png">
 </div>
-</body>
-</html>
+<div class="slide" id="slide1">
+  <img class="slide_img" src="banner-files/2014/0-bg.png">
+</div>
+</div>
+<script type="text/javascript">
+i_current=0;
+function doSlide() {
+  i_next=i_current+1;
+  if(i_next>1) i_next=0;
+
+  $('#slide'+i_next).transition({x:'100%',duration:0});
+  $('#slide'+i_next).transition({x:'0%'});
+  $('#slide'+i_current).transition({x:'0%',duration:0});
+  $('#slide'+i_current).transition({x:'-100%'});
+
+  window.setTimeout('doSlide()',3000);
+}
+window.setTimeout('doSlide()',5000);
+</script>
+</body</html>

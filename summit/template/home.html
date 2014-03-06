@@ -1,5 +1,18 @@
 {% extends "base.html" %}
 {% block title %}{{ title }}{% endblock %}
 {% block content %}
-<iframe style="padding:0;border:0;margin:0;width:100%;height:500px;" src="/static/banner.html" frameborder="no" scrolling="no"></iframe>
+
+<div style="max-height:500px;overflow:hidden;">
+<div style="position:relative;width:100%;height:0;padding-bottom:33%;margin-left:auto;margin-right:auto;max-width:1500px;max-height:500px;">
+<iframe style="max-width:100%;max-height:500px;left:0;top:0;" width="1500" height="500" src="/static/banner.html" frameborder="no" scrolling="no"></iframe>
+</div>
+</div>
+
+<div class="content_page">
+  <div>
+<div style="float:right;display:inline-block;margin-top:-15px;" class="clickable" onclick="window.location.href='/register';"><a style="border:0;padding:0;margin:0;" href="/register"><img src="/static/images/register.png" alt="Register Now"></a></div>
+<div style="line-height:50px;font-size:40px;padding-bottom:40px;"><b>May 3-4</b> at the <b>MIT Media Lab</b></div>
+<div><b>Half of the world</b> population and <b>three-quarters of all large cities</b> are located on the coast. <b>634 million people</b> are at risk from rising water levels. That is only one example of the variety of challenges coastal cities face, effecting policies, businesses, entrepreneurs, research and human well-being. How will our world landscapes change as a result? New York City, Shanghai, Sydney, Rio de Janeiro&mdash;many coastal cities are nexuses for the global economy. MIT is addressing these challenges of coastal cities at the 2014 MIT Sustainability Summit. The conference will <b>defy traditional notions of urban development</b> to ask how coastal cities can sustain themselves and <b>continue to grow</b> as the climate changes and their local environments deteriorate. Register now to <b>learn what the future</b> holds for these cities, what <b>complex problems and exciting solutions</b> exist and what they mean to you and the work you do, and <b>how you can help</b> overcome them to build sustainable coastal cities.</div>
+</div>
+</div>
 {% endblock %}

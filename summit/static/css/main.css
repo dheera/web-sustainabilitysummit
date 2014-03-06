@@ -192,6 +192,10 @@ h2 {
   font-size: 17px;
 }
 
+.navbar_mobile select:focus {
+  outline:0;
+}
+
 .subnavbar {
   float:right;
   margin-top:40px;
@@ -237,6 +241,10 @@ h2 {
   padding:7px;
   font-family: sustainabilitysummit;
   font-size: 17px;
+}
+
+.subnavbar_mobile select:focus {
+  outline:0;
 }
 
 .program_mobile {
