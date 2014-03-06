@@ -30,7 +30,7 @@ with open('.dbpassword') as fp:
   db_password = string.strip(fp.read())
 
 db_url = "mysql://%s:%s@%s/%s?charset=utf8&use_unicode=1" % (db_username, db_password, db_server, db_name)
-db_engine = create_engine(db_url, convert_unicode=True, pool_size=20, pool_recycle=30, echo_pool='debug')
+db_engine = create_engine(db_url, convert_unicode=True, pool_size=20, pool_recycle=30)
 event.listen(db_engine, 'checkout', checkout_listener)
 
 db_session = scoped_session(sessionmaker(autocommit=False, autoflush=False, bind=db_engine))
