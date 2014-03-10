@@ -16,7 +16,7 @@ CACHE_DIR = 'summit/static/cache'
 
 photos = Blueprint('photos', __name__,template_folder='../template')
 
-@photos.route('/<album>/<photo>/<size>/')
+@photos.route('/<album>/<photo>/<size>')
 def get_photo_resized(album,photo,size):
   allowed_sizes = ['154x154','300x200','600x400']
 
@@ -37,7 +37,7 @@ def get_photo_resized(album,photo,size):
   return send_file('../'+thumb_file)
 
 
-@photos.route('/<path:album>/<path:photo>')
+@photos.route('/<album>/<photo>')
 def get_photo(album,photo):
   if '..' in album or album.startswith('/'):
     abort(404)
@@ -59,7 +59,7 @@ def show(year):
     if not year in dirs:
       abort(404)
 
-  photos_html = ''
+  content = ''
 
   for image_file in glob.glob("%s/%s/*.jpg" % (PHOTOS_DIR,year)):
     image_url = '/photos' + image_file.replace(PHOTOS_DIR,'')
@@ -71,8 +71,8 @@ def show(year):
     #if not os.path.exists(thumb_file):
     #  call(["convert", "-strip", image_file, "-thumbnail", thumb_size+"^", "-gravity", "center", "-quality", "83", "-extent", thumb_size, thumb_file])
 
-    photos_html += "<div class=\"photos_thumbnail clickable\">"
-    photos_html += "<a title=\"\" class=\"swipebox\" href=\"%s\"><img src=\"%s\"></a>" % (image_url, thumb_url)
-    photos_html += "</div> " # trailing space after </div> is important! we are using inline-block
+    content += "<div class=\"photos_thumbnail clickable\">"
+    content += "<a title=\"\" class=\"swipebox\" href=\"%s\"><img src=\"%s\"></a>" % (image_url, thumb_url)
+    content += "</div> " # trailing space after </div> is important! we are using inline-block
 
-  return render_template('page.html',title='Photos',content=photos_html,subnavbar=subnavbar,subnavbar_current=year)
+  return render_template('page.html',title='Photos',content=content,subnavbar=subnavbar,subnavbar_current=year)

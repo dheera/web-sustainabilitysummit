@@ -29,32 +29,36 @@ def show(year):
 
   event = Event.query.filter(Event.name == year).first()
 
-  sponsors_html=''
+  content=''
 
   for sponsorship in event.sponsorship:
-    sponsors_html += '<h2>%s</h2>' % sponsorship.name
+    content += '<h2>%s</h2>' % sponsorship.name
 
     for sponsor in sponsorship.sponsor:
       vector_url = sponsor.get_logo_vector_url()
       raster_url = sponsor.get_logo_raster_url()
 
       if(False and vector_url): # until we find a workaround for Chrome <object> bug which has been around for years
-        sponsors_html += '<div class="sponsor" style="cursor:pointer;cursor:hand;" onclick="window.location.href=\'%s\';">' % sponsor.url
-        sponsors_html += '<div class="ui_cover" style="width:210px;height:110px;"></div>'
-        sponsors_html += '<object alt="%s" data="%s" type="image/svg+xml" width="210" height="110"><param name="src" value="%s">' % (sponsor.name, vector_url, vector_url);
-        sponsors_html += '<img alt="%s" width="210" height="110" src="%s">' % (sponsor.name, raster_url);
-        sponsors_html += '</object>'
-        sponsors_html += '</div> '
+        content += '<div class="sponsor" style="cursor:pointer;cursor:hand;" onclick="window.location.href=\'%s\';">' % sponsor.url
+        content += '<div class="ui_cover" style="width:210px;height:110px;"></div>'
+        content += '<object alt="%s" data="%s" type="image/svg+xml" width="210" height="110"><param name="src" value="%s">' % (sponsor.name, vector_url, vector_url);
+        content += '<img alt="%s" width="210" height="110" src="%s">' % (sponsor.name, raster_url);
+        content += '</object>'
+        content += '</div> ' # trailing space is important!
       elif(raster_url):
-        sponsors_html += '<div class="sponsor clickable" onclick="window.location.href=\'%s\';">' % sponsor.url
-        sponsors_html += '<div class="ui_cover" style="width:210px;height:110px;"></div>'
-        sponsors_html += '<img alt="%s" style="width:210px;height:110px;" src="%s">' % (sponsor.name, raster_url);
-        sponsors_html += '</div> '
+        content += '<div class="sponsor clickable" onclick="window.location.href=\'%s\';">' % sponsor.url
+        content += '<div class="ui_cover" style="width:210px;height:110px;"></div>'
+        content += '<img alt="%s" style="width:210px;height:110px;" src="%s">' % (sponsor.name, raster_url);
+        content += '</div> ' # trailing space is important!
       else:
-        sponsors_html += '<div class="sponsor clickable" onclick="window.location.href=\'%s\';">' % sponsor.url
-        sponsors_html += '<div>'
-        sponsors_html += sponsor.name
-        sponsors_html += '</div>'
-        sponsors_html += '</div> '
+        content += '<div class="sponsor clickable" onclick="window.location.href=\'%s\';">' % sponsor.url
+        content += '<div style="margin-top:38px;">'
+        content += sponsor.name
+        content += '</div>'
+        content += '</div> ' # trailing space is important!
 
-  return render_template('page.html',title='Sponsors',content=sponsors_html,subnavbar=subnavbar,subnavbar_current=year)
+    content += '<div style="margin-top:20px;">'
+    content += 'If you are interested in learning more about becoming a sponsor, please contact our Sponsorship Team at <b>summit-sponsorship at mit dot edu</b>. Thanks!'
+    content += '</div>'
+
+  return render_template('page.html',title='Sponsors',content=content,subnavbar=subnavbar,subnavbar_current=year)

@@ -31,95 +31,95 @@ def show(year):
 
   event = Event.query.filter(Event.name == year).first()
 
-  program_html = ''
+  content = ''
 
-  program_html += '<div class="program_mobile">'
+  content += '<div class="program_mobile">'
   timeslot_last = 0
   for timeslot in event.timeslot:
     if(timeslot_last==0 or timeslot.time_start.strftime("%Y%m%d")!=timeslot_last.time_start.strftime("%Y%m%d")):
-      program_html += '<div class="program_row">'
-      program_html += '<div class="program_date">'
-      program_html += timeslot.time_start.strftime("<b>%A</b> %e %B %Y")
-      program_html += '</div>'
-      program_html += '</div>'
+      content += '<div class="program_row">'
+      content += '<div class="program_date">'
+      content += timeslot.time_start.strftime("<b>%A</b> %e %B %Y")
+      content += '</div>'
+      content += '</div>'
     timeslot_last = timeslot
 
     for session in timeslot.session:
       if session.description!='':
-        program_html += '<div class="clickable program_mobile_row_clickable" onclick="$(this).next(\'.program_mobile_session_description\').slideToggle();$(this).children(\'.program_mobile_icon\').toggleClass(\'program_mobile_icon_off program_mobile_icon_on\')">'
-        program_html += '<div class="program_mobile_icon program_mobile_icon_off"></div>'
+        content += '<div class="clickable program_mobile_row_clickable" onclick="$(this).next(\'.program_mobile_session_description\').slideToggle();$(this).children(\'.program_mobile_icon\').toggleClass(\'program_mobile_icon_off program_mobile_icon_on\')">'
+        content += '<div class="program_mobile_icon program_mobile_icon_off"></div>'
       else:
-        program_html += '<div class="program_mobile_row">'
-        program_html += '<div class="program_mobile_icon"></div>'
-      program_html += '<div class="program_mobile_time">%s</div>' % timeslot.time_start.strftime("%H:%M")
-      program_html += '<div class="program_mobile_session">%s</div>' % session.name
-      program_html += '</div>'
+        content += '<div class="program_mobile_row">'
+        content += '<div class="program_mobile_icon"></div>'
+      content += '<div class="program_mobile_time">%s</div>' % timeslot.time_start.strftime("%H:%M")
+      content += '<div class="program_mobile_session">%s</div>' % session.name
+      content += '</div>'
       if session.description!='':
-        program_html += '<div class="program_mobile_session_description">'
-        program_html += session.description
+        content += '<div class="program_mobile_session_description">'
+        content += session.description
         for person in session.person:
 
-          program_html += '<div class="clickable program_mobile_session_person" onclick="$(this).next(\'.program_mobile_session_person_description\').slideToggle();">'
-          program_html += '<div class="program_mobile_session_person_picture"><img src="%s"></div>' % person.get_picture_url(size='60x60')
-          program_html += '<b>%s %s</b><br>%s, %s' % (person.firstname, person.lastname, person.title, person.org)
-          program_html += '</div>'
+          content += '<div class="clickable program_mobile_session_person" onclick="$(this).next(\'.program_mobile_session_person_description\').slideToggle();">'
+          content += '<div class="program_mobile_session_person_picture"><img src="%s"></div>' % person.get_picture_url(size='60x60')
+          content += '<b>%s %s</b><br>%s, %s' % (person.firstname, person.lastname, person.title, person.org)
+          content += '</div>'
 
-          program_html += '<div class="program_mobile_session_person_description">'
-          program_html += person.description
-          program_html += '</div>'
+          content += '<div class="program_mobile_session_person_description">'
+          content += person.description
+          content += '</div>'
 
-        program_html += '</div>'
+        content += '</div>'
 
-  program_html += '</div>'
+  content += '</div>'
 
-  program_html += '<div class="program">'
+  content += '<div class="program">'
   timeslot_last = 0
   for timeslot in event.timeslot:
     if(timeslot_last==0 or timeslot.time_start.strftime("%Y%m%d")!=timeslot_last.time_start.strftime("%Y%m%d")):
-      program_html += '<div class="program_row">'
-      program_html += '<div class="program_date">'
-      program_html += timeslot.time_start.strftime("<b>%A</b> %e %B %Y")
-      program_html += '</div>'
-      program_html += '</div>'
+      content += '<div class="program_row">'
+      content += '<div class="program_date">'
+      content += timeslot.time_start.strftime("<b>%A</b> %e %B %Y")
+      content += '</div>'
+      content += '</div>'
     timeslot_last = timeslot
-    program_html += '<div class="program_row">'
-    program_html += '<div class="program_time">%s</div>' % timeslot.time_start.strftime("%H:%M")
-    program_html += '<div class="program_timeslot">'
+    content += '<div class="program_row">'
+    content += '<div class="program_time">%s</div>' % timeslot.time_start.strftime("%H:%M")
+    content += '<div class="program_timeslot">'
     for session in timeslot.session:
       if session.description.strip() != "" or len(session.person)>0:
-        program_html += '<div class="clickable program_session" onclick="window.location.href=\'#%s\'">' % slugify(session.name)
-        program_html += '<span style="font-size:12px;"><a href="#%s">READ MORE &raquo;</a></span>' % slugify(session.name)
+        content += '<div class="clickable program_session" onclick="window.location.href=\'#%s\'">' % slugify(session.name)
+        content += '<span style="font-size:12px;"><a href="#%s">READ MORE &raquo;</a></span>' % slugify(session.name)
       else:
-        program_html += '<div class="program_session">'
-      program_html += '<div class="program_session_name">%s</div>' % session.name
-      program_html += '</div>'
+        content += '<div class="program_session">'
+      content += '<div class="program_session_name">%s</div>' % session.name
+      content += '</div>'
 
-    program_html += '</div>'
-    program_html += '</div>'
+    content += '</div>'
+    content += '</div>'
 
-  program_html += '<br><br>'
-  program_html += '<h2>Session descriptions</h2><br>'
+  content += '<br><br>'
+  content += '<h2>Session descriptions</h2><br>'
 
   for timeslot in event.timeslot:
     for session in timeslot.session:
       if session.description.strip() != "" or len(session.person)>0:
-        program_html += '<a name="%s"></a>' % slugify(session.name)
-        program_html += '<div class="clickable program_backtotop" onclick="window.location.href=\'#\'"></div>' 
-        program_html += '<h3>%s</h3>' % session.name
-        program_html += session.description
+        content += '<a name="%s"></a>' % slugify(session.name)
+        content += '<div class="clickable program_backtotop" onclick="window.location.href=\'#\'"></div>' 
+        content += '<h3>%s</h3>' % session.name
+        content += session.description
         for person in session.person:
-          program_html += '<div class="program_person">'
-          program_html += '<div class="program_person_cell"><img src="'+person.get_picture_url(size='120x120')+'"></div>'
-          program_html += '<div class="program_person_cell">'
-          program_html += '<div class="program_person_name">%s %s</div>' % (person.firstname, person.lastname)
-          program_html += '<div class="program_person_titleorg">%s, %s</div>' % (person.title.upper(), person.org)
+          content += '<div class="program_person">'
+          content += '<div class="program_person_cell"><img src="'+person.get_picture_url(size='120x120')+'"></div>'
+          content += '<div class="program_person_cell">'
+          content += '<div class="program_person_name">%s %s</div>' % (person.firstname, person.lastname)
+          content += '<div class="program_person_titleorg">%s, %s</div>' % (person.title.upper(), person.org)
           if(person.description):
-            program_html += '<div class="program_readdescription clickable" onclick="$(this).next(\'.program_person_description\').slideToggle()"></div>'
-          program_html += '<div class="program_person_description">%s</div>' % person.description
-          program_html += '</div>'
-          program_html += '</div>'
-        program_html += '<br><br>'
+            content += '<div class="program_readdescription clickable" onclick="$(this).next(\'.program_person_description\').slideToggle()"></div>'
+          content += '<div class="program_person_description">%s</div>' % person.description
+          content += '</div>'
+          content += '</div>'
+        content += '<br><br>'
 
-  program_html += '</div>'
+  content += '</div>'
 
-  return render_template('page.html',title='Program',content=program_html,subnavbar=subnavbar,subnavbar_current=year)
+  return render_template('page.html',title='Program',content=content,subnavbar=subnavbar,subnavbar_current=year)

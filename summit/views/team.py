@@ -28,35 +28,35 @@ def show(year):
 
   event = Event.query.filter(Event.name == year).first()
 
-  team_html=''
+  content=''
 
   for team in event.team:
-    team_html += '<h2>%s</h2>' % team.name
+    content += '<h2>%s</h2>' % team.name
 
     for person in team.person:
-      team_html += '<div class="team_person">'
-      team_html += '<div class="team_person_picture"><img src="'+person.get_picture_url(size='120x120')+'"></div>'
-      team_html += '<div class="program_person_cell">'
-      team_html += '<div class="program_person_name">%s %s</div>' % (person.firstname, person.lastname)
+      content += '<div class="team_person">'
+      content += '<div class="team_person_picture"><img src="'+person.get_picture_url(size='120x120')+'"></div>'
+      content += '<div class="program_person_cell">'
+      content += '<div class="program_person_name">%s %s</div>' % (person.firstname, person.lastname)
       if(not team.name):
-        team_html += '<div class="program_person_titleorg">%s</div>' % person.title
+        content += '<div class="program_person_titleorg">%s</div>' % person.title
       if(person.description):
-        team_html += '<div class="team_person_description">%s</div>' % person.description
-      team_html += '</div>'
-      team_html += '</div>'
+        content += '<div class="team_person_description">%s</div>' % person.description
+      content += '</div>'
+      content += '</div>'
 
-      team_html += '<div class="team_mobile_person clickable" onclick="$(this).next(\'.team_mobile_person_description_wrapper\').slideToggle()">'
-      team_html += '<div class="team_mobile_person_picture"><img src="'+person.get_picture_url(size='120x120')+'"></div>'
-      team_html += '<div class="team_mobile_person_cell">'
-      team_html += '<div class="program_person_name">%s %s</div>' % (person.firstname, person.lastname)
+      content += '<div class="team_mobile_person clickable" onclick="$(this).next(\'.team_mobile_person_description_wrapper\').slideToggle()">'
+      content += '<div class="team_mobile_person_picture"><img src="'+person.get_picture_url(size='120x120')+'"></div>'
+      content += '<div class="team_mobile_person_cell">'
+      content += '<div class="program_person_name">%s %s</div>' % (person.firstname, person.lastname)
       if(not team.name):
-        team_html += '<div class="program_person_titleorg">%s</div>' % person.title
-      team_html += '</div>'
-      team_html += '</div>'
+        content += '<div class="program_person_titleorg">%s</div>' % person.title
+      content += '</div>'
+      content += '</div>'
       if(person.description):
-        team_html += '<div class="team_mobile_person_description_wrapper">'
-        team_html += '<div class="team_mobile_person_description">%s</div>' % person.description
-        team_html += '</div>'
-      team_html += '<br><br>'
+        content += '<div class="team_mobile_person_description_wrapper">'
+        content += '<div class="team_mobile_person_description">%s</div>' % person.description
+        content += '</div>'
+      content += '<br><br>'
 
-  return render_template('page.html',title='Team',content=team_html,subnavbar=subnavbar,subnavbar_current=year)
+  return render_template('page.html',title='Team',content=content,subnavbar=subnavbar,subnavbar_current=year)
