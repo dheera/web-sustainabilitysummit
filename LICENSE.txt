@@ -20,6 +20,8 @@ summit/media
 summit/static
 summit/template
 
+as well as any content stored in the MIT Sustainability Summit database.
+
 -------- LICENSE FOR BACK-END CODE ONLY --------
 
 The back-end framework code may be freely reused under the BSD license.
