@@ -5,14 +5,21 @@ This repository is primarily intended for website maintainence rather
 than a public software repository. However it is publicly viewable 
 for educational purposes.
 
-In order to protect the branding of the MIT Sustainability Summit,
-the content of this website, including text, logos, artwork, color
+-------- CONTENT --------
+
+Copyright (C) 2014 Massachusetts Institute of Technology.
+All rights reserved.
+
+All content of this website, including text, logos, artwork, color
 schemes, themes, user interface elements, website templates, or
 photographs may NOT be reproduced, adapted, or reused without
 explicit permission.
 
-ONLY the back-end framework code (with the exception of the above)
-may be freely reused under the BSD license:
+-------- LICENSE FOR BACK-END CODE ONLY --------
+
+The back-end framework code may be freely reused under the BSD license.
+This license applies ONLY to the framework and does NOT apply to
+any of the content described above.
 
 Copyright (C) 2014 Massachusetts Institute of Technology.
 All rights reserved.
