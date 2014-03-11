@@ -18,7 +18,7 @@ directories and their subdirectories:
 
 summit/media
 summit/static
-summit/setmplate
+summit/template
 
 -------- LICENSE FOR BACK-END CODE ONLY --------
 
