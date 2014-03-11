@@ -797,6 +797,10 @@ h2 {
   }
 }
 
+.button {
+  box-shadow: 4px 4px 4px #a0a0a0;
+}
+
 ::-webkit-scrollbar { width:14px;height:10px; }
 ::-webkit-scrollbar-button:start:decrement,
 ::-webkit-scrollbar-button:end:increment { height:0px;display:block;background-color:#e0e0e0; }
