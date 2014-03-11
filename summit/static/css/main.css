@@ -777,8 +777,13 @@ h2 {
   }
   .home_top_box {
     display:block;
-    text-align:center;
     margin-bottom:20px;
+  }
+  .home_top_box_headline {
+    text-align:center;
+  }
+  .home_top_box_register {
+    text-align:center;
   }
   .home_bottom {
     display:block;
