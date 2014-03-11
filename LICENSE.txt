@@ -1,0 +1,10 @@
+Copyright (C) Massachusetts Institute of Technology.
+
+In order to protect the branding of the MIT Sustainability Summit,
+the content of this website, including text, logos, artwork, color
+schemes, themes, user interface elements, website templates, or
+photographs may NOT be reproduced, adapted, or reused without
+explicit permission.
+
+The back-end code in this repository with the exception of the above
+may be freely reused under the BSD license.
