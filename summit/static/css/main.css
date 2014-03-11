@@ -655,6 +655,9 @@ h2 {
   font-size:40px;
   line-height:50px;
 }
+.home_top_box_register {
+  text-align:right;
+}
 .home_bottom {
   display:table;table-layout:fixed;margin-top:30px;width:100%;height:200px;border-spacing:10px;border:none;
 }
@@ -737,6 +740,10 @@ h2 {
   }
   .home_top_box_headline {
     font-size:32px;
+    text-align:center;
+  }
+  .home_top_box_register {
+    text-align:center;
   }
 }
 @media screen and (max-width: 1000px) and (min-width: 800px) {
