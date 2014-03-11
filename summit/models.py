@@ -139,7 +139,7 @@ class Person(Base):
     dest_filename = 'summit'+cache_url
 
     if not os.path.exists(src_filename):
-      return '/static/images/blank.gif'
+      return '/static/images/person_blank.jpg'
 
     if not os.path.exists(dest_filename):
       call(["convert", "-sharpen", "0x0.8", "-strip", src_filename, "-thumbnail", size+"^", "-gravity", "center", "-extent", size, "-quality", "90", dest_filename])

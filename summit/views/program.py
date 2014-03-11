@@ -65,7 +65,8 @@ def show(year):
           content += '</div>'
 
           content += '<div class="program_mobile_session_person_description">'
-          content += person.description
+          if(person.description):
+            content += person.description
           content += '</div>'
 
         content += '</div>'
