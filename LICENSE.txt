@@ -13,7 +13,12 @@ All rights reserved.
 All content of this website, including text, logos, artwork, color
 schemes, themes, user interface elements, website templates, or
 photographs may NOT be reproduced, adapted, or reused without
-explicit permission.
+explicit permission. This includes anything in the following
+directories and their subdirectories:
+
+summit/media
+summit/static
+summit/setmplate
 
 -------- LICENSE FOR BACK-END CODE ONLY --------
 
