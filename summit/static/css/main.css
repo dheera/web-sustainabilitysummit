@@ -741,6 +741,7 @@ h2 {
   .home_top_box_headline {
     font-size:32px;
     text-align:center;
+    margin-right:0;
   }
   .home_top_box_register {
     text-align:center;
@@ -781,6 +782,7 @@ h2 {
   }
   .home_top_box_headline {
     text-align:center;
+    margin-right:0;
   }
   .home_top_box_register {
     text-align:center;
