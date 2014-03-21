@@ -57,8 +57,8 @@ def show(year):
         content += '</div>'
         content += '</div> ' # trailing space is important!
 
-    content += '<div style="margin-top:20px;">'
-    content += 'If you are interested in learning more about becoming a sponsor, please contact our Sponsorship Team at <b>summit-sponsorship at mit dot edu</b>. Thanks!'
-    content += '</div>'
+  content += '<div style="margin-top:20px;">'
+  content += 'If you are interested in learning more about becoming a sponsor, please contact our Sponsorship Team at <b>summit-sponsorship at mit dot edu</b>. Thanks!'
+  content += '</div>'
 
   return render_template('page.html',title='Sponsors',content=content,subnavbar=subnavbar,subnavbar_current=year)
