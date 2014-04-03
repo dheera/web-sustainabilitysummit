@@ -45,7 +45,7 @@ def show(year):
     timeslot_last = timeslot
 
     for session in timeslot.session:
-      if session.description.strip() != "" or len(session.person)>0:
+      if (session.description and session.description.strip() != "") or len(session.person)>0:
         content += '<div class="clickable program_mobile_row_clickable" onclick="$(this).next(\'.program_mobile_session_description\').slideToggle();$(this).children(\'.program_mobile_icon\').toggleClass(\'program_mobile_icon_off program_mobile_icon_on\')">'
         content += '<div class="program_mobile_icon program_mobile_icon_off"></div>'
       else:
@@ -54,7 +54,7 @@ def show(year):
       content += '<div class="program_mobile_time">%s</div>' % timeslot.time_start.strftime("%H:%M")
       content += '<div class="program_mobile_session">%s</div>' % session.name
       content += '</div>'
-      if session.description.strip() != "" or len(session.person)>0:
+      if (session.description and session.description.strip() != "") or len(session.person)>0:
         content += '<div class="program_mobile_session_description">'
         content += session.description
         for person in session.person:
@@ -87,7 +87,7 @@ def show(year):
     content += '<div class="program_time">%s</div>' % timeslot.time_start.strftime("%H:%M")
     content += '<div class="program_timeslot">'
     for session in timeslot.session:
-      if session.description.strip() != "" or len(session.person)>0:
+      if (session.description and session.description.strip() != "") or len(session.person)>0:
         content += '<div class="clickable program_session" onclick="window.location.href=\'#%s\'">' % slugify(session.name)
         content += '<span style="font-size:12px;"><a href="#%s">READ MORE &raquo;</a></span>' % slugify(session.name)
       else:
@@ -103,7 +103,7 @@ def show(year):
 
   for timeslot in event.timeslot:
     for session in timeslot.session:
-      if session.description.strip() != "" or len(session.person)>0:
+      if(session.description and session.description.strip() != "") or len(session.person)>0:
         content += '<a name="%s"></a>' % slugify(session.name)
         content += '<div class="clickable program_backtotop" onclick="window.location.href=\'#\'"></div>' 
         content += '<h3 style="padding-left:15px;border-left:15px solid #b0c0b0;">%s</h3>' % session.name
