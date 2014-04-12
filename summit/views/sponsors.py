@@ -46,12 +46,12 @@ def show(year):
         content += '</object>'
         content += '</div> ' # trailing space is important!
       elif(raster_url):
-        content += '<div class="sponsor clickable" onclick="window.location.href=\'%s\';">' % sponsor.url
+        content += '<div class="sponsor clickable" onclick="var w=window.open(\'%s\',\'_blank\');w.focus();">' % sponsor.url
         content += '<div class="ui_cover" style="width:210px;height:110px;"></div>'
         content += '<img alt="%s" style="width:210px;height:110px;" src="%s">' % (sponsor.name, raster_url);
         content += '</div> ' # trailing space is important!
       else:
-        content += '<div class="sponsor clickable" onclick="window.location.href=\'%s\';">' % sponsor.url
+        content += '<div class="sponsor clickable" onclick="var w=window.open(\'%s\',\'_blank\');w.focus();">' % sponsor.url
         content += '<div style="margin-top:38px;">'
         content += sponsor.name
         content += '</div>'
