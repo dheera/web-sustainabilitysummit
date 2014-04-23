@@ -45,7 +45,7 @@ class Sponsorship(Base):
   event_id = Column(Integer, ForeignKey('event.id'))
   name = Column(String(255))
   priority = Column(Integer)
-  sponsor = relationship('Sponsor', secondary=assoc_sponsor_sponsorship, backref='sponsorship')
+  sponsor = relationship('Sponsor', order_by='Sponsor.name', secondary=assoc_sponsor_sponsorship, backref='sponsorship')
 
   def __init__(self, name=None, priority=0, event_id=None):
     self.name=name
@@ -191,7 +191,7 @@ class Session(Base):
   description = Column(String(4095))
   location = Column(String(255))
   timeslot_id = Column(Integer, ForeignKey('timeslot.id'))
-  person = relationship('Person', secondary=assoc_person_session, backref='session')
+  person = relationship('Person', order_by='Person.lastname', secondary=assoc_person_session, backref='session')
 
   def __init__(self, name=None, description=None, location=None, timeslot_id=None):
     self.name=name

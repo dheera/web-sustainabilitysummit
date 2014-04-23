@@ -5,6 +5,8 @@ from summit.models import *
 from summit.cache import cached
 from summit.slugify import slugify
 
+import bbcode
+
 from sqlalchemy import desc, func
 from sqlalchemy.orm import subqueryload
 
@@ -32,7 +34,7 @@ def show(year):
   event = Event.query.filter(Event.name == year).first()
 
   content = ''
-
+  
   content += '<div class="program_mobile">'
   timeslot_last = 0
   for timeslot in event.timeslot:
@@ -56,7 +58,7 @@ def show(year):
       content += '</div>'
       if (session.description and session.description.strip() != "") or len(session.person)>0:
         content += '<div class="program_mobile_session_description">'
-        content += session.description
+        content += bbcode.render_html(session.description)
         for person in session.person:
 
           content += '<div class="clickable program_mobile_session_person" onclick="$(this).next(\'.program_mobile_session_person_description\').slideToggle();">'
@@ -66,7 +68,7 @@ def show(year):
 
           content += '<div class="program_mobile_session_person_description">'
           if(person.description):
-            content += person.description
+            content += bbcode.render_html(person.description)
           content += '</div>'
 
         content += '</div>'
@@ -107,7 +109,7 @@ def show(year):
         content += '<a name="%s"></a>' % slugify(session.name)
         content += '<div class="clickable program_backtotop" onclick="window.location.href=\'#\'"></div>' 
         content += '<h3 style="padding-left:15px;border-left:15px solid #b0c0b0;">%s</h3>' % session.name
-        content += session.description
+        content += bbcode.render_html(session.description)
         for person in session.person:
           content += '<div class="program_person">'
           content += '<div class="program_person_cell"><img src="'+person.get_picture_url(size='120x120')+'"></div>'
@@ -116,7 +118,7 @@ def show(year):
           content += '<div class="program_person_titleorg">%s, %s</div>' % (person.title.upper(), person.org)
           if(person.description):
             content += '<div class="program_readdescription clickable" onclick="$(this).next(\'.program_person_description\').slideToggle()"></div>'
-          content += '<div class="program_person_description">%s</div>' % person.description
+            content += '<div class="program_person_description">%s</div>' % bbcode.render_html(person.description)
           content += '</div>'
           content += '</div>'
         content += '<br><br>'

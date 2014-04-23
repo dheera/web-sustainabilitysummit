@@ -1,4 +1,7 @@
 from flask import Flask,request,render_template,send_file,send_from_directory
+from flask_geoip import GeoIP
+from functools import wraps, update_wrapper
+from datetime import datetime
 from database import db_session
 
 app = Flask(__name__)
@@ -36,6 +39,12 @@ app.register_blueprint(team,url_prefix='/team')
 @app.route('/static/<path:filename>')
 def send_foo(filename):
   return send_from_directory('/static', filename)
+
+@app.after_request
+def add_header(response):
+    response.headers['Cache-Control'] = 'max-age=300, must-revalidate'
+    response.headers['Expires'] = '-1'
+    return response
 
 # local development server with debug features
 # (deployment is via fcgi which ignores this)
