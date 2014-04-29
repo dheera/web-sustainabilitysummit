@@ -18,9 +18,9 @@
       </div>
 
       <div class="team_mobile_person clickable" onclick="$(this).next(\'.team_mobile_person_description_wrapper\').slideToggle()">
-      <div class="team_mobile_person_picture"><img src="'+person.get_picture_url(size='120x120')+'"></div>
+      <div class="team_mobile_person_picture"><img src="{{ person.get_picture_url(size='120x120') }}"></div>
       <div class="team_mobile_person_cell">
-      <div class="program_person_name">{{ person.firstname }}{{ person.lastname }}</div>
+      <div class="program_person_name">{{ person.firstname }} {{ person.lastname }}</div>
       {% if not team.name %}
         <div class="program_person_titleorg">{{ person.title }}</div>
       {% endif %}

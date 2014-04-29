@@ -572,14 +572,12 @@ h2 {
 
 .sponsor {
   border:1px solid #d8d8d8;
-  width:220px;
-  height:110px;
   display:inline-block;
   text-align:center;
   margin-right:9px;
   margin-bottom:9px;
-  padding-left:10px;
-  padding-right:10px;
+  padding-left:5px;
+  padding-right:5px;
   padding-top:20px;
   padding-bottom:20px;
   vertical-align:middle;
@@ -588,6 +586,16 @@ h2 {
   -ms-box-shadow:2px 2px 8px #e0e0e0;
   -o-box-shadow:2px 2px 8px #e0e0e0;
   box-shadow:2px 2px 8px #e0e0e0;
+}
+
+.sponsor_small {
+  width:220px;
+  height:110px;
+}
+
+.sponsor_big {
+  width:300px;
+  height:165px;
 }
 
 .photos_thumbnail {

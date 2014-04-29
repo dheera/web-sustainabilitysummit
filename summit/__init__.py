@@ -45,9 +45,16 @@ def send_foo(filename):
 
 @app.after_request
 def add_header(response):
+  if(response.headers['Content-Type'].find('image/')==0):
+    response.headers['Cache-Control'] = 'max-age=7200, must-revalidate'
+    response.headers['Expires'] = '0'
+  elif(response.headers['Content-Type'].find('application/')==0):
+    response.headers['Cache-Control'] = 'max-age=7200, must-revalidate'
+    response.headers['Expires'] = '0'
+  else:
     response.headers['Cache-Control'] = 'max-age=300, must-revalidate'
-    response.headers['Expires'] = '-1'
-    return response
+    response.headers['Expires'] = '0'
+  return response
 
 # local development server with debug features
 # (deployment is via fcgi which ignores this)

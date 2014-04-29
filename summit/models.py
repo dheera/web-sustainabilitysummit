@@ -5,7 +5,7 @@ import datetime, time, os, io
 from subprocess import call
 
 # person can appear in multiple sessions,
-# and session has multiple persons as  participants
+# and session has multiple persons as participants
 assoc_person_session = Table('assoc_person_session', Base.metadata,
   Column('person_id', Integer, ForeignKey('person.id')),
   Column('session_id', Integer, ForeignKey('session.id')),
@@ -31,13 +31,7 @@ assoc_sponsor_sponsorship = Table('assoc_sponsor_sponsorship', Base.metadata,
   mysql_charset='utf8',
 )
 
-#assoc_event_sponsorship = Table('assoc_event_sponsorship', Base.metadata,
-#  Column('event_id', Integer, ForeignKey('event.id')),
-#  Column('sponsorship_id', Integer, ForeignKey('sponsorship.id')),
-#  mysql_engine='InnoDB',
-#  mysql_charset='utf8',
-#)
-
+# a sponsorship category for a particular year, e.g. Gold Sponsors for 2010
 class Sponsorship(Base):
   __tablename__ = 'sponsorship'
   __table_args__ = {'mysql_engine':'InnoDB','mysql_charset':'utf8'}
@@ -154,7 +148,7 @@ class Event(Base):
   id = Column(Integer, primary_key=True)
   name = Column(String(255), unique=True)
   timeslot = relationship('Timeslot', backref='event')
-  sponsorship = relationship('Sponsorship', backref='event')
+  sponsorship = relationship('Sponsorship', backref='event', order_by='Sponsorship.priority')
   team = relationship('Team', backref='event')
 
   def __init__(self, name=None):

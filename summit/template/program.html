@@ -1,0 +1,96 @@
+{% extends "page.html" %}
+{% block title %}{{ title }}{% endblock %}
+{% block subcontent %}
+<div class="program_mobile">
+  {% set timeslot_last = 0 %}
+  {% for timeslot in timeslot_list %}\
+    {% if timeslot_last==0 or timeslot.time_start.strftime("%Y%m%d")!=timeslot_last.time_start.strftime("%Y%m%d") %}
+      <div class="program_row">
+        <div class="program_date">
+          content += timeslot.time_start.strftime("<b>%A</b> %e %B %Y")
+        </div>
+      </div>
+    {% endif %}
+    {% set timeslot_last = timeslot %}
+    {% for session in timeslot.session %}
+      {% if (session.description and session.description.strip() != "") or len(session.person)>0 %}
+        <div class="clickable program_mobile_row_clickable" onclick="$(this).next(\'.program_mobile_session_description\').slideToggle();$(this).children(\'.program_mobile_icon\').toggleClass(\'program_mobile_icon_off program_mobile_icon_on\')">
+        <div class="program_mobile_icon program_mobile_icon_off"></div>
+      {% else %}
+        <div class="program_mobile_row">
+        <div class="program_mobile_icon"></div>
+      {% endif %}
+      <div class="program_mobile_time">%s</div>' % timeslot.time_start.strftime("%H:%M")
+      <div class="program_mobile_session">%s</div>' % session.name
+      </div>
+      {% if (session.description and session.description.strip() != "") or len(session.person)>0 %}
+        <div class="program_mobile_session_description">
+          {{ bbcode.render_html(session.description) }} 
+          {% for person in session.person %}
+            <div class="clickable program_mobile_session_person" onclick="$(this).next(\'.program_mobile_session_person_description\').slideToggle();">
+            <div class="program_mobile_session_person_picture"><img src="%s"></div>' % person.get_picture_url(size='60x60')
+            <b>{{ person.firstname }} {{ person.lastname }}</b><br>
+            {{ person.title }}, {{ person.org }}
+            </div>
+            <div class="program_mobile_session_person_description">
+            {% if(person.description) %}
+              {{ bbcode.render_html(person.description) }}
+            {% endif %}
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endfor %}
+  {% endfor %}
+</div>
+
+  <div class="program">
+  timeslot_last = 0
+  for timeslot in event.timeslot:
+    if(timeslot_last==0 or timeslot.time_start.strftime("%Y%m%d")!=timeslot_last.time_start.strftime("%Y%m%d")):
+      <div class="program_row">
+      <div class="program_date">
+      content += timeslot.time_start.strftime("<b>%A</b> %e %B %Y")
+      </div>
+      </div>
+    timeslot_last = timeslot
+    <div class="program_row">
+    <div class="program_time">%s</div>' % timeslot.time_start.strftime("%H:%M")
+    <div class="program_timeslot">
+    for session in timeslot.session:
+      if (session.description and session.description.strip() != "") or len(session.person)>0:
+        <div class="clickable program_session" onclick="window.location.href=\'#%s\'">' % slugify(session.name)
+        <span style="font-size:12px;"><a href="#%s">READ MORE &raquo;</a></span>' % slugify(session.name)
+      else:
+        <div class="program_session">
+      <div class="program_session_name">%s</div>' % session.name
+      </div>
+
+    </div>
+    </div>
+
+  <br><br>
+  <h2>Session descriptions</h2><br>
+
+  for timeslot in event.timeslot:
+    for session in timeslot.session:
+      if(session.description and session.description.strip() != "") or len(session.person)>0:
+        <a name="%s"></a>' % slugify(session.name)
+        <div class="clickable program_backtotop" onclick="window.location.href=\'#\'"></div>' 
+        <h3 style="padding-left:15px;border-left:15px solid #b0c0b0;">%s</h3>' % session.name
+        content += bbcode.render_html(session.description)
+        for person in session.person:
+          <div class="program_person">
+          <div class="program_person_cell"><img src="'+person.get_picture_url(size='120x120')+'"></div>
+          <div class="program_person_cell">
+          <div class="program_person_name">%s %s</div>' % (person.firstname, person.lastname)
+          <div class="program_person_titleorg">%s, %s</div>' % (person.title.upper(), person.org)
+          if(person.description):
+            <div class="program_readdescription clickable" onclick="$(this).next(\'.program_person_description\').slideToggle()"></div>
+            <div class="program_person_description">%s</div>' % bbcode.render_html(person.description)
+          </div>
+          </div>
+        <br><br>
+
+  </div>
+{% endblock %}

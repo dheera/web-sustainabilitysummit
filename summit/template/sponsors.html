@@ -4,15 +4,24 @@
   {% for sponsorship in sponsorship_list %}
     <h2>{{ sponsorship.name }}</h2>
     {% for sponsor in sponsorship.sponsor %}
-      {% if sponsor.get_logo_raster_url() %}
-        <div class="sponsor clickable" onclick="var w=window.open('{{ sponsor.url }}','_blank');w.focus();">
+      {% if sponsorship.priority==0 %}
+      <div class="sponsor sponsor_big clickable" onclick="var w=window.open('{{ sponsor.url }}','_blank');w.focus();">
+        {% if sponsor.get_logo_raster_url() %}
+          <div class="ui_cover" style="width:290px;height:165px;"></div>
+          <img alt="{{ sponsor.name }}" style="width:290px;height:165px;" src="{{ sponsor.get_logo_raster_url('580x330') }}">
+        {% else %}
+          <div style="margin-top:38px;">{{ sponsor.name }}</div>
+        {% endif %}
+      </div> 
+      {% else %}
+      <div class="sponsor sponsor_small clickable" onclick="var w=window.open('{{ sponsor.url }}','_blank');w.focus();">
+        {% if sponsor.get_logo_raster_url() %}
           <div class="ui_cover" style="width:210px;height:110px;"></div>
           <img alt="{{ sponsor.name }}" style="width:210px;height:110px;" src="{{ sponsor.get_logo_raster_url() }}">
-        </div> 
-      {% else %}
-        <div class="sponsor clickable" onclick="var w=window.open('{{ sponsor.url }}','_blank');w.focus();">
+        {% else %}
           <div style="margin-top:38px;">{{ sponsor.name }}</div>
-        </div> 
+        {% endif %}
+      </div> 
       {% endif %}
     {% endfor %}
   {% endfor %}
