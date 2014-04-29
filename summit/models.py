@@ -69,7 +69,7 @@ class Sponsor(Base):
     # the source image we are looking for
     src_filename = 'summit/media/db-sponsor/%s.png' % str(self.id)
     # where we hope to find a cached copy, or create one if it doesn't exist
-    cache_url = '/static/cache/sponsor_%s_%s.png' % (str(self.id), size)
+    cache_url = '/static/cache/sponsor-%s-%s.png' % (str(self.id), size)
     dest_filename = 'summit'+cache_url
 
     if not os.path.exists(src_filename):
@@ -85,7 +85,7 @@ class Sponsor(Base):
     # the source image we are looking for
     src_filename = 'summit/media/db-sponsor/%s.svg' % str(self.id)
     # where we hope to find a cached copy, or create one if it doesn't exist
-    cache_url = '/static/cache/sponsor_%s.svg' % str(self.id)
+    cache_url = '/static/cache/sponsor-%s.svg' % str(self.id)
     dest_filename = 'summit'+cache_url
 
     if not os.path.exists(src_filename):
@@ -129,7 +129,7 @@ class Person(Base):
     src_filename = 'summit/media/db-person/'+str(self.id)
 
     # where we hope to find a cached copy, or create one if it doesn't exist
-    cache_url = '/static/cache/person_%s_%s.jpg' % (str(self.id), size)
+    cache_url = '/static/cache/person-%s-%s.jpg' % (str(self.id), size)
     dest_filename = 'summit'+cache_url
 
     if not os.path.exists(src_filename):
