@@ -14,49 +14,22 @@ team = Blueprint('team', __name__,template_folder='../template')
 
 @team.route('/', defaults={'year': ''})
 @team.route('/<year>')
+@cached()
 def show(year):
-
+  # find out which years have team data in database
   eventQuery = Event.query.join(Team).group_by(Event).order_by(desc(Event.name)).having(func.count(Team.id)>0).all()
 
+  # generate the subnavbar by year
   subnavbar=list(('/team/'+e.name,e.name,e.name) for e in eventQuery)
 
+  # decide which year is being requested based on URL or default to current year
   if year=='':
     year = subnavbar[0][1]
   else:
     if not year in tuple(e.name for e in eventQuery):
       abort(404)
 
+  # query for that year
   event = Event.query.filter(Event.name == year).first()
 
-  content=''
-
-  for team in event.team:
-    content += '<h2>%s</h2>' % team.name
-
-    for person in team.person:
-      content += '<div class="team_person">'
-      content += '<div class="team_person_picture"><img src="'+person.get_picture_url(size='120x120')+'"></div>'
-      content += '<div class="program_person_cell">'
-      content += '<div class="program_person_name">%s %s</div>' % (person.firstname, person.lastname)
-      if(not team.name):
-        content += '<div class="program_person_titleorg">%s</div>' % person.title
-      if(person.description):
-        content += '<div class="team_person_description">%s</div>' % person.description
-      content += '</div>'
-      content += '</div>'
-
-      content += '<div class="team_mobile_person clickable" onclick="$(this).next(\'.team_mobile_person_description_wrapper\').slideToggle()">'
-      content += '<div class="team_mobile_person_picture"><img src="'+person.get_picture_url(size='120x120')+'"></div>'
-      content += '<div class="team_mobile_person_cell">'
-      content += '<div class="program_person_name">%s %s</div>' % (person.firstname, person.lastname)
-      if(not team.name):
-        content += '<div class="program_person_titleorg">%s</div>' % person.title
-      content += '</div>'
-      content += '</div>'
-      if(person.description):
-        content += '<div class="team_mobile_person_description_wrapper">'
-        content += '<div class="team_mobile_person_description">%s</div>' % person.description
-        content += '</div>'
-      content += '<br><br>'
-
-  return render_template('page.html',title='Team',content=content,subnavbar=subnavbar,subnavbar_current=year)
+  return render_template('team.html',title='Team',team_list=event.team,subnavbar=subnavbar,subnavbar_current=year)
