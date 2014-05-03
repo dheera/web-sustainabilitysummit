@@ -277,7 +277,7 @@ h2 {
   display:table-cell;
   background:#e8e8e8;
   color:#0080cc;
-  width:30px;
+  width:25px;
 }
 .program_mobile_icon_off:after {
   content:"\25B6";
@@ -289,7 +289,7 @@ h2 {
 .program_mobile_time {
   padding:5px;
   display:table-cell;
-  width:60px;
+  width:40px;
   background:#e8e8e8;
   font-weight:bold;
   text-align:center;
@@ -297,6 +297,21 @@ h2 {
   border-bottom:2px solid white;
   border-left:0;
   border-right:0;
+}
+
+.program_mobile_session_location {
+  padding:5px;
+  display:table-cell;
+  width:30px;
+  background:#e8e8e8;
+  font-weight:bold;
+  text-align:center;
+  border-top:2px solid white;
+  border-bottom:2px solid white;
+  border-left:0;
+  border-right:0;
+  font-size:13px;
+  color:#707070;
 }
 
 .program_mobile_session {
@@ -372,7 +387,6 @@ h2 {
   padding:5px;
   display:table-cell;
   width:100px;
-  background:#e0e0e0;
   border:2px solid white;
   font-weight:bold;
   text-align:center;
@@ -398,8 +412,11 @@ h2 {
   padding:5px;
   max-width:100%;
   display:table-cell;
-  background:#e0e0e0;
   border:2px solid white;
+}
+
+.program_session_location {
+  font-size:13px;
 }
 
 .program_person {
@@ -444,6 +461,27 @@ h2 {
 }
 .program_row:nth-child(2n+1) .program_time {
   background: #e0e0e0;
+}
+
+.program_row_active:nth-child(1n) .program_time {
+  background:#f0b060;
+}
+
+.program_row_active:nth-child(1n) .program_session {
+  background:#f0b060;
+}
+
+.program_mobile_row_active:nth-child(1n) .program_mobile_time {
+  background:#f0b060;
+}
+.program_mobile_row_active:nth-child(1n) .program_mobile_session {
+  background:#f0b060;
+}
+.program_mobile_row_active:nth-child(1n) .program_mobile_icon {
+  background:#f0b060;
+}
+.program_mobile_row_active:nth-child(1n) .program_mobile_session_location {
+  background:#f0b060;
 }
 
 .program_session_name {
