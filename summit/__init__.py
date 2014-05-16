@@ -1,4 +1,5 @@
 from flask import Flask,request,render_template,send_file,send_from_directory
+from jinja2 import Markup
 from flask_admin import Admin, BaseView, expose
 from flask_geoip import GeoIP
 from functools import wraps, update_wrapper
@@ -14,7 +15,11 @@ app = Flask(__name__)
 app.jinja_options['extensions'].append('jinja2htmlcompress.HTMLCompress')
 
 # additional jinja2 filters we will use in templates
-app.jinja_env.filters['bbcode'] = bbcode.render_html
+
+def render_bbcode(code):
+  return Markup(bbcode.render_html(code))
+
+app.jinja_env.filters['bbcode'] = render_bbcode
 app.jinja_env.filters['slugify'] = slugify
 
 # admin interface (under construction)

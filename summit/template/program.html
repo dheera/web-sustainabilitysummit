@@ -37,7 +37,7 @@
       {%- endif -%}
       {%- if (session.description and session.description.strip() != "") or session.person.__len__()>0 -%}
         <div class="program_mobile_session_description">
-          {{- session.description|bbcode|safe -}} 
+          {{- session.description|bbcode -}} 
           {% for person in session.person %}
             <div class="clickable program_mobile_session_person" onclick="$(this).next('.program_mobile_session_person_description').slideToggle();">
               <div class="program_mobile_session_person_picture">
@@ -48,7 +48,7 @@
             </div>
             <div class="program_mobile_session_person_description">
               {%- if(person.description) -%}
-                {{- person.description|bbcode|safe -}}
+                {{- person.description|bbcode -}}
               {%- endif -%}
             </div>
           {%- endfor -%}
@@ -102,7 +102,7 @@
       <a name="{{ session.name|slugify }}"></a>
       <div class="clickable program_backtotop" onclick="window.location.href='#'"></div>
       <h3 style="padding-left:15px;border-left:15px solid #b0c0b0;">{{ session.name }}</h3>
-      {{- session.description|bbcode|safe -}}
+      {{- session.description|bbcode -}}
       {%- for person in session.person -%}
         <div class="program_person">
           <div class="program_person_cell">
@@ -117,7 +117,7 @@
               {%- if(person.description) -%}
                 <div class="program_readdescription clickable" onclick="$(this).next('.program_person_description').slideToggle()"></div>
                 <div class="program_person_description">
-                  {{- person.description|bbcode|safe -}}
+                  {{- person.description|bbcode -}}
                 </div>
               {%- endif -%}
             </div>
