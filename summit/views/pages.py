@@ -12,7 +12,7 @@ def show(pages):
     isHeaderFinished=0
     header_json=''
     content=''
-    with open('summit/media/pages/' + pages) as fp:
+    with open('summit/pages/' + pages) as fp:
       for line in fp:
         if(line.strip()==''):
           isHeaderFinished=1

@@ -67,7 +67,7 @@ class Sponsor(Base):
   def get_logo_raster_url(self,size='420x220'):
 
     # the source image we are looking for
-    src_filename = 'summit/media/db-sponsor/%s.png' % str(self.id)
+    src_filename = 'summit/db/sponsor/%s.png' % str(self.id)
     # where we hope to find a cached copy, or create one if it doesn't exist
     cache_url = '/static/cache/sponsor-%s-%s.png' % (str(self.id), size)
     dest_filename = 'summit'+cache_url
@@ -83,7 +83,7 @@ class Sponsor(Base):
   def get_logo_vector_url(self):
 
     # the source image we are looking for
-    src_filename = 'summit/media/db-sponsor/%s.svg' % str(self.id)
+    src_filename = 'summit/db/sponsor/%s.svg' % str(self.id)
     # where we hope to find a cached copy, or create one if it doesn't exist
     cache_url = '/static/cache/sponsor-%s.svg' % str(self.id)
     dest_filename = 'summit'+cache_url
@@ -126,7 +126,7 @@ class Person(Base):
   def get_picture_url(self,size='120x120'):
 
     # the source image we are looking for
-    src_filename = 'summit/media/db-person/'+str(self.id)
+    src_filename = 'summit/db/person/'+str(self.id)
 
     # where we hope to find a cached copy, or create one if it doesn't exist
     cache_url = '/static/cache/person-%s-%s.jpg' % (str(self.id), size)
