@@ -5,8 +5,19 @@ from functools import wraps, update_wrapper
 from datetime import datetime
 from database import db_session
 
+from summit.slugify import slugify
+import bbcode
+
 app = Flask(__name__)
 
+# get rid of extraneous white space in HTML
+app.jinja_options['extensions'].append('jinja2htmlcompress.HTMLCompress')
+
+# additional jinja2 filters we will use in templates
+app.jinja_env.filters['bbcode'] = bbcode.render_html
+app.jinja_env.filters['slugify'] = slugify
+
+# admin interface (under construction)
 admin = Admin(app)
 
 # sql.mit.edu's version of Flask doesn't support teardown_appcontext
@@ -18,7 +29,7 @@ def shutdown_session(exception=None):
 from views.home import home
 app.register_blueprint(home)
 
-# static content that needs only templating (e.g. about, venue, etc.)
+# static pages that need only templating (e.g. about, venue, etc.)
 from views.pages import pages
 app.register_blueprint(pages)
 
@@ -43,15 +54,20 @@ app.register_blueprint(team,url_prefix='/team')
 def send_foo(filename):
   return send_from_directory('/static', filename)
 
+# adjust client side caching
 @app.after_request
 def add_header(response):
   if(response.headers['Content-Type'].find('image/')==0):
+    # tell client to cache images for 2 hours
     response.headers['Cache-Control'] = 'max-age=7200, must-revalidate'
     response.headers['Expires'] = '0'
   elif(response.headers['Content-Type'].find('application/')==0):
+    # tell client to cache downloads for 2 hours
     response.headers['Cache-Control'] = 'max-age=7200, must-revalidate'
     response.headers['Expires'] = '0'
   else:
+    # tell client to cache everything else (especially text/html) for 5 minutes only
+    # in case urgent updates to content need to be made
     response.headers['Cache-Control'] = 'max-age=300, must-revalidate'
     response.headers['Expires'] = '0'
   return response

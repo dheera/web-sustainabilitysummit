@@ -6,6 +6,10 @@
 @version     1.2.1
 @license      MIT License
 
+Modified by Dheera Venkatraman (dheera@dheera.net) to use CSS transitions on
+transform:translateX instead of left, which gives hardware-accelerated performance
+(smoother sliding effect) on mobile devices.
+
 ----------------------------------------------------------------------------------------------*/
 
 ;(function (window, document, $, undefined) {

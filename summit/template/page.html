@@ -6,7 +6,7 @@
     {%- if subnavbar -%}
       <ul class="subnavbar">
       {%- for href, id, caption in subnavbar -%}
-        <li{% if id == subnavbar_current %} class="subnavbar_active"{% endif %}><a href="{{ href|e }}">{{ caption|e }}</a></li>
+        <li {% if id == subnavbar_current %} class="subnavbar_active"{% endif %}><a href="{{ href|e }}">{{ caption|e }}</a></li>
       {%- endfor -%}
       </ul>
       <div class="subnavbar_mobile">
