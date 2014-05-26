@@ -15,11 +15,7 @@ app = Flask(__name__)
 app.jinja_options['extensions'].append('jinja2htmlcompress.HTMLCompress')
 
 # additional jinja2 filters we will use in templates
-
-def render_bbcode(code):
-  return Markup(bbcode.render_html(code))
-
-app.jinja_env.filters['bbcode'] = render_bbcode
+app.jinja_env.filters['bbcode'] = lambda code: Markup(bbcode.render_html(code))
 app.jinja_env.filters['slugify'] = slugify
 
 # admin interface (under construction)
