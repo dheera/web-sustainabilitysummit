@@ -1,0 +1,128 @@
+<html><head>
+<script type="text/javascript" src="/static/js/jquery-2.0.3.min.js"></script>
+<script type="text/javascript" src="/static/js/jquery.transit.min.js"></script>
+<meta charset="UTF-8">
+<style type="text/css">
+<!--
+html {
+  width:100%;
+  height:100%;
+}
+
+body {
+  margin:0;
+  width:100%;
+  height:100%;
+  overflow: hidden;
+}
+
+#cover {
+  position:fixed;
+  z-index:10000;
+  top:0px;
+  lefT:0px;
+  width:100%;
+  height:100%;
+}
+
+.slide {
+  visibility:hidden;
+  position:fixed;
+  top:0px;
+  left:0px;
+  width:100%;
+  height:100%;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.slide img {
+  width:100%;
+  position:absolute;
+  top:0px;
+  left:0px;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+-->
+</style>
+</head><body>
+<div id="cover" style="position:absolute;top:0px;left:0px;"></div>
+<div class="slide" id="slide0">
+  <img data-y0="-20%" data-y1="0%" data-dt=3000 src="banner-files/2015/0-bg.jpg">
+  <img src="banner-files/2015/0-1.png">
+</div>
+<div class="slide" id="slide0">
+  <img src="banner-files/2015/1-bg.jpg">
+</div>
+<script type="text/javascript">
+var i_current=0;
+var i_total=0;
+
+function doSlide(init) {
+  if(init) {
+    i_next=0;
+  } else {
+    i_next=i_current+1;
+    if(i_next>=i_total) i_next=0;
+  }
+
+  $('#slide'+i_next).children('img').each(function(i) {
+    var t = $(this);
+    var d = t.data();
+    var newState = { duration:0 };
+    newState['opacity'] = 1;
+    if(d.x0) newState['x'] = d.x0;
+    if(d.y0) newState['y'] = d.y0;
+    if(d.o0) newState['opacity'] = d.o0;
+    t.transition(newState);
+  });
+
+  $('#slide'+i_next).css('visibility','visible');
+
+  if(!init) {
+    $('#slide'+i_next).transition({x:'100%',duration:0});
+    $('#slide'+i_next).transition({x:'0%'});
+  }
+
+  $('#slide'+i_next).children('img').each(function(i) {
+    var t = $(this);
+    var d = t.data();
+    var newState = { duration:d.dt };
+    newState['opacity'] = 1;
+    if(d.x1) newState['x'] = d.x1;
+    if(d.y1) newState['y'] = d.y1;
+    if(d.o1) newState['opacity'] = d.o1;
+    t.transition(newState);
+  });
+
+  if(!init) {
+    $('#slide'+i_current).transition({x:'0%',duration:0});
+    $('#slide'+i_current).transition({x:'-100%'});
+  }
+
+  window.setTimeout('doSlide()',4000);
+  i_current = i_next;
+}
+
+$(function() {
+  $('#banner-cover')
+    .bind('contextmenu',function(event){
+      event.preventDefault();
+      return false;
+    })
+
+
+
+  i_total = $('.slide').length;
+  window.setTimeout('doSlide(true)',0);
+  $('#slide0').children('img').each(function(i) {
+    var t = $(this);
+    var d = t.data();
+    if(d.x0) t.transition({opacity:0, duration:0});
+    if(d.y0) t.transition({opacity:0, duration:0});
+  });
+});
+</script>
+</body</html>
