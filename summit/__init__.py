@@ -4,8 +4,11 @@ from flask_geoip import GeoIP
 from functools import wraps, update_wrapper
 from datetime import datetime
 from database import db_session
+import bbcode, slugify
 
 app = Flask(__name__)
+app.jinja_env.filters['bbcode'] = bbcode.render_html
+app.jinja_env.filters['slugify'] = slugify.slugify
 
 admin = Admin(app)
 
