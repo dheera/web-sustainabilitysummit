@@ -1,6 +1,11 @@
 {% extends "page.html" %}
 {% block title %}{{ title }}{% endblock %}
 {% block subcontent %}
+
+  <div style="margin-top:20px;">
+    We are still confirming sponsors for 2015. If you are interested in learning more about becoming a sponsor, please contact our Sponsorship Team at <b>summit-sponsorship at mit dot edu</b>. Thanks!
+  </div>
+
   {% for sponsorship in sponsorship_list %}
     <h2>{{ sponsorship.name }}</h2>
     {% for sponsor in sponsorship.sponsor %}
@@ -23,7 +28,4 @@
       {% endif %}
     {% endfor %}
   {% endfor %}
-  <div style="margin-top:20px;">
-    If you are interested in learning more about becoming a sponsor, please contact our Sponsorship Team at <b>summit-sponsorship at mit dot edu</b>. Thanks!
-  </div>
 {% endblock %}
