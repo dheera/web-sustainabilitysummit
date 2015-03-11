@@ -5,8 +5,6 @@ from summit.models import *
 from summit.cache import cached
 from summit.slugify import slugify
 
-from pprint import pprint
-
 import bbcode
 
 from sqlalchemy import desc, func
