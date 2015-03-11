@@ -5,6 +5,8 @@ from summit.models import *
 from summit.cache import cached
 from summit.slugify import slugify
 
+from pprint import pprint
+
 import bbcode
 
 from sqlalchemy import desc, func
@@ -36,5 +38,8 @@ def show(year):
   # query for that year
   event = Event.query.filter(Event.name == year).first()
 
-  return render_template('program.html',title='Program',timeslot_list=event.timeslot,subnavbar=subnavbar,subnavbar_current=year)
+  # sort the timeslots in case they were entered not in order
+  timeslot_list = sorted(list(event.timeslot), key=lambda x:x.time_start)
+
+  return render_template('program.html',title='Program',timeslot_list=timeslot_list,subnavbar=subnavbar,subnavbar_current=year)
 
