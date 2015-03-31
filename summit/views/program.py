@@ -36,8 +36,11 @@ def show(year):
   # query for that year
   event = Event.query.filter(Event.name == year).first()
 
+  # filter out empty timeslots
+  timeslot_list = list(filter(lambda x:len(x.session)>0, list(event.timeslot)))
+
   # sort the timeslots in case they were entered not in order
-  timeslot_list = sorted(list(event.timeslot), key=lambda x:x.time_start)
+  timeslot_list = sorted(list(timeslot_list), key=lambda x:x.time_start)
 
   return render_template('program.html',title='Program',timeslot_list=timeslot_list,subnavbar=subnavbar,subnavbar_current=year)
 
