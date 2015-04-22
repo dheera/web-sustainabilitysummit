@@ -70,7 +70,7 @@
         </div>
       </div>
       {%- set timeslot_last = timeslot -%}
-    {%- else -%}
+    {%- endif -%}
       <div class="program_row">
         <div class="program_time">
           {{- timeslot.time_start.strftime("%H:%M") -}}
@@ -90,7 +90,6 @@
           {%- endfor -%}
         </div>
       </div>
-    {%- endif -%}
   {%- endfor -%}
 </div>
 
