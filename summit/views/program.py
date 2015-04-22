@@ -16,6 +16,28 @@ from subprocess import call
 
 program = Blueprint('program', __name__,template_folder='../template')
 
+@program.route('/badges.csv', defaults={'year': ''})
+@program.route('/<year>/badges.csv')
+def get_csv(year):
+  eventQuery = Event.query.join(Team).group_by(Event).order_by(desc(Event.name)).having(func.count(Team.id)>0).all()
+  subnavbar=list(('/team/'+e.name,e.name,e.name) for e in eventQuery)
+  if year=='':
+    year = subnavbar[0][1]
+  else:
+    if not year in tuple(e.name for e in eventQuery):
+      abort(404)
+
+  event = Event.query.filter(Event.name == year).first()
+  content = ''
+  content += 'lastname,firstname,title,org,type,typebg'
+  content += "\n"
+  for timeslot in event.timeslot:
+    for session in timeslot.session:
+      for person in session.person:
+        content += '%s,%s,"%s","%s",SPEAKER,#00A000' % (person.lastname.strip(), person.firstname.strip(), person.title.strip(), person.org.strip())
+        content += "\n"
+  return Response(content,mimetype='text/csv')
+
 @program.route('/', defaults={'year': ''})
 @program.route('/<year>')
 def show(year):
