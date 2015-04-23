@@ -66,3 +66,31 @@ def show(year):
 
   return render_template('program.html',title='Program',timeslot_list=timeslot_list,subnavbar=subnavbar,subnavbar_current=year)
 
+@program.route('/slides', defaults={'year': ''})
+@program.route('/<year>/slides')
+def show_slides(year):
+  
+  # find out which years have program data in database
+  eventQuery = Event.query.join(Timeslot).group_by(Event).order_by(desc(Event.name)).having(func.count(Timeslot.id)>0).all()
+
+  # generate the subnavbar by year
+  subnavbar=list(('/program/'+e.name,e.name,e.name) for e in eventQuery)
+
+  # decide which year is being requested based on URL or default to current year
+  if year=='':
+    year = subnavbar[0][1]
+  else:
+    if not year in tuple(e.name for e in eventQuery):
+      abort(404)
+
+  # query for that year
+  event = Event.query.filter(Event.name == year).first()
+
+  # filter out empty timeslots
+  timeslot_list = list(filter(lambda x:len(x.session)>0, list(event.timeslot)))
+
+  # sort the timeslots in case they were entered not in order
+  timeslot_list = sorted(list(timeslot_list), key=lambda x:x.time_start)
+
+  return render_template('program-slides.html',title='Program',timeslot_list=timeslot_list,subnavbar=subnavbar,subnavbar_current=year)
+

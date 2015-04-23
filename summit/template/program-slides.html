@@ -1,0 +1,113 @@
+<!doctype html>
+<html>
+<head>
+<style type="text/css">
+html, body {
+  -webkit-user-select:none;
+  user-select:none;
+  margin:0;
+  width:100%;
+  height:100%;
+}
+
+.program_slide {
+  position:fixed;
+  display:block;
+  padding:5%;
+  width:100%;
+  height:100%;
+  background:#ffffff;
+  color:#000000;
+  border-bottom:2px solid #cccccc;
+}
+.program_slide table {
+  width:90%;
+  height:90%;
+  table-layout:fixed;
+  word-wrap:none;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+.program_slide tr {
+  vertical-align:middle;
+}
+
+.program_slide td {
+  vertical-align:middle;
+}
+
+.program_slide_person_image {
+  width:20%;
+}
+
+.program_slide_person_image img {
+  height:100%;
+}
+
+.program_slide_person_description {
+  max-width:100%;
+}
+
+.program_slide_person_description h2 {
+  font-weight:100;
+  margin-top:0;
+  margin-bottom:0;
+  font-size:3vh;
+  word-wrap:none;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+.program_slide_person_description h3 {
+  margin-top:2%;
+  margin-bottom:0;
+  font-weight:100;
+  font-size:1.5vh;
+  word-wrap:none;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+.program_slide h1 {
+  font-weight:100;
+  font-size:6vw;
+  word-wrap:none;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  color:#a09090;
+  margin-top:0;
+  margin-bottom:5%;
+  padding:0;
+}
+</style>
+</head>
+<body>
+{%- for timeslot in timeslot_list -%}
+  {%- for session in timeslot.session -%}
+    {%- if(session.description and session.description.strip() != "") or session.person.__len__()>0 -%}
+      <div class="program_slide">
+      <table>
+      <tr><td colspan="2"><h1>{{ session.name }}</h1></td></tr>
+      {%- for person in session.person -%}
+        <tr class="program_slide_person">
+          <td class="program_slide_person_image">
+            <img src="{{ person.get_picture_url(size='120x120') }}">
+          </td>
+          <td class="program_slide_person_description">
+            <h2>{{- person.firstname }} {{ person.lastname -}}</h2>
+            <h3>{{- person.title.upper() }} | {{ person.org -}}</h3>
+          </td>
+        </tr>
+      {%- endfor -%}
+      </table>
+      </div>
+    {%- endif -%}
+  {%- endfor -%}
+{%- endfor -%}
+</body>
+</html>
