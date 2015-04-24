@@ -15,7 +15,7 @@
     {%- set timeslot_last = timeslot -%}
     {%- for session in timeslot.session -%}
       {%- if (session.description and session.description.strip() != "") or session.person.__len__()>0 -%}
-        <div class="clickable program_mobile_row_clickable" onclick="$(this).next('.program_mobile_session_description').slideToggle();$(this).children('.program_mobile_icon').toggleClass('program_mobile_icon_off program_mobile_icon_on')">
+        <div class="clickable program_mobile_row program_mobile_row_clickable" onclick="$(this).next('.program_mobile_session_description').slideToggle();$(this).children('.program_mobile_icon').toggleClass('program_mobile_icon_off program_mobile_icon_on')" data-time_start="{{ timeslot.time_start.strftime("%s") }}" data-time_end="{{ timeslot.time_end.strftime("%s") }}">
           <div class="program_mobile_icon program_mobile_icon_off"></div>
           <div class="program_mobile_time">
             {{- timeslot.time_start.strftime("%H:%M") -}}
@@ -25,7 +25,7 @@
           </div>
         </div>
       {%- else -%}
-        <div class="program_mobile_row">
+        <div class="program_mobile_row" data-time_start="{{ timeslot.time_start.strftime("%s") }}" data-time_end="{{ timeslot.time_end.strftime("%s") }}">
           <div class="program_mobile_icon"></div>
           <div class="program_mobile_time">
             {{- timeslot.time_start.strftime("%H:%M") -}}
@@ -69,7 +69,7 @@
       </div>
       {%- set timeslot_last = timeslot -%}
     {%- endif -%}
-      <div class="program_row">
+      <div class="program_row" data-time_start="{{ timeslot.time_start.strftime("%s") }}" data-time_end="{{ timeslot.time_end.strftime("%s") }}">
         <div class="program_time">
           {{- timeslot.time_start.strftime("%H:%M") -}}
         </div>
@@ -129,5 +129,38 @@
 {%- endfor -%}
 
 </div>
+
+ <script type="text/javascript">
+$(function(){
+  runProgramTimer();
+});
+
+var PROGRAM_TZOFFSET=0; // -4;
+
+function runProgramTimer() {
+  var marked = false;
+  $('.program_row').each(function(){
+    var now = (new Date).getTime()/1000 + PROGRAM_TZOFFSET*3600;
+    if(($(this).data('time_start')<now||!marked) && now<$(this).data('time_end')) {
+      $(this).addClass('program_row_active');
+      marked = true;
+    } else {
+      $(this).removeClass('program_row_active');
+    }
+  });
+  marked = false;
+  $('.program_mobile_row').each(function(){
+    var now = (new Date).getTime()/1000 + PROGRAM_TZOFFSET*3600;
+    if(($(this).data('time_start')<now||!marked) && $(this).data('time_end')>now) {
+      $(this).addClass('program_mobile_row_active');
+      marked = true;
+    } else {
+      $(this).removeClass('program_mobile_row_active');
+    }
+  });
+  window.setTimeout('runProgramTimer()',5000);
+}
+
+</script> 
 
 {%- endblock -%}
