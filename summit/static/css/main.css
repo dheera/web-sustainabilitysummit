@@ -711,12 +711,15 @@ h2 {
   background:#ffffff;
   vertical-align:middle;
   text-align:center;
-  font-size:14px;
+  font-size:17px;
   color:#606060;
-  font-family: mainfont;
   font-weight:normal;
 }
 
+.navbar-mobile a {
+  border:none;
+  text-decoration:none;
+}
 
 .footer {
   background:#606060;
