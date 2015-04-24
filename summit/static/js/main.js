@@ -2,6 +2,10 @@ $(document).ready(function(){
   $('.nodrag').mousedown(function(event){event.preventDefault();});
   $('.clickable').mouseenter(function(){$(this).addClass('clickable_hover');}).mouseleave(function(){$(this).removeClass('clickable_hover');}).mousedown(function(event){event.preventDefault();});
   $(".swipebox").swipebox({useCSS:true});
+  $('.navbar-mobile-button').click(function(){
+    $(this).toggleClass('is-active');
+    $('.navbar-mobile-container').slideToggle();
+  });
 });
 
 var isHDDisplay = window.devicePixelRatio > 1;
