@@ -849,3 +849,41 @@
 	};
 
 }( window, document, jQuery ) );
+
+// hack to be able to change hashes without triggering hashchange event
+var oldHash = window.location.hash;
+
+function vibrate(t) {
+  v = window.navigator.vibrate || window.navigator.webkitVibrate || window.navigator.mozVibrate;
+  if(v) {
+    v.call(navigator, t);
+  }
+}
+
+function changeHash(newHash) {
+  // prevent triggering of onHashChange code
+  oldHash = newHash;
+  window.location.hash = newHash;
+}
+
+function onHashChange() {
+  // check if hash really changed (or if we set it manually, do nothing)
+  var newHash = window.location.hash;
+  if(oldHash !== newHash) {
+    $('#swipebox-close').click();
+    if(newHash.length>1) {
+      $('#' + newHash.replace('.jpg','').replace(/[^A-Za-z0-9_\.\-]/g,'')).click();
+    }
+  }
+  oldHash = newHash;
+}
+
+$(function() {
+
+  if(window.location.hash.length>2) {
+    $('#'+window.location.hash.replace('.jpg','').replace(/[^A-Za-z0-9_\.\-]/g,'')).click();
+  }
+
+  $(window).bind('hashchange', onHashChange);
+
+});
